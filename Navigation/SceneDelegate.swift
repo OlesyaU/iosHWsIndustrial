@@ -21,11 +21,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let profileVC = UINavigationController(rootViewController: ProfileViewController())
         let feedVC = UINavigationController(rootViewController: FeedViewController())
         let tabBar = UITabBarController()
-        tabBar.viewControllers = [profileVC, feedVC]
-        
+        tabBar.viewControllers = [feedVC, profileVC]
+        UITabBar.appearance().backgroundColor = .secondarySystemBackground
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = tabBar
-//        window?.rootViewController = feedVC
         window?.makeKeyAndVisible()
         
     }

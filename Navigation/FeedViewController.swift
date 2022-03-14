@@ -8,26 +8,28 @@
 import UIKit
 
 class FeedViewController: UIViewController {
-
+    private let button = UIButton()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .purple
-//        navigationController?.navigationBar.barStyle = .black
+        view.backgroundColor = .systemMint
         navigationItem.title = "Feed"
-        tabBarController?.tabBarItem.image = .add
-        navigationController?.title = "Feed"
-        navigationController?.tabBarItem.image = .init(systemName: "post")
+       navigationController?.title = "Feed"
+        navigationController?.tabBarItem.image = .init(systemName: "rectangle.on.rectangle")
+ 
+    createButton()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func createButton() {
+        view.addSubview(button)
+        button.frame = CGRect(x: 100 , y: 200, width: view.bounds.width/2, height: 100)
+        button.backgroundColor = .systemRed
+        button.tintColor = .black
+        button.titleLabel?.text = "Go to post"
+        
+        
+        
     }
-    */
-
+   
 }

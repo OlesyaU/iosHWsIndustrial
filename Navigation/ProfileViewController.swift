@@ -14,9 +14,9 @@ class ProfileViewController: UIViewController {
 view.backgroundColor = .yellow
         navigationController?.title = "Profile"
         navigationItem.title = "Profile"
-//        tabBarController?.view.tintColor = .red
-//        tabBarController?.view.contentMode = .center
         navigationController?.tabBarItem.image = .init(systemName: "person")
+
+
         
         
     }
