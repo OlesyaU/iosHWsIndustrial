@@ -9,6 +9,10 @@ import UIKit
 
 class FeedViewController: UIViewController {
     private let button = UIButton()
+//    перенести настройки иконки и
+//    настройки контроллера в сцен делегейт
+    
+    
     
     
     override func viewDidLoad() {

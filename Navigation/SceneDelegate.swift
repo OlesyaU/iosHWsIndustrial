@@ -19,6 +19,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
        
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let profileVC = UINavigationController(rootViewController: ProfileViewController())
+        profileVC.tabBarItem.image = .init(systemName: "person")
+        profileVC.tabBarItem.title = "Profile"
         let feedVC = UINavigationController(rootViewController: FeedViewController())
         let tabBar = UITabBarController()
         tabBar.viewControllers = [feedVC, profileVC]
