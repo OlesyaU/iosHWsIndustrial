@@ -10,6 +10,9 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    let profileVC = UINavigationController(rootViewController: ProfileViewController())
+    let feedVC = UINavigationController(rootViewController: FeedViewController())
+    let tabBar = UITabBarController()
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -18,17 +21,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
        
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let profileVC = UINavigationController(rootViewController: ProfileViewController())
-        profileVC.tabBarItem.image = .init(systemName: "person")
-        profileVC.tabBarItem.title = "Profile"
-        let feedVC = UINavigationController(rootViewController: FeedViewController())
-        let tabBar = UITabBarController()
-        tabBar.viewControllers = [feedVC, profileVC]
-        UITabBar.appearance().backgroundColor = .secondarySystemBackground
+        setupControllers()
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = tabBar
         window?.makeKeyAndVisible()
         
+    }
+    
+    private func setupControllers(){
+        feedVC.view.backgroundColor = .systemMint
+        feedVC.navigationController?.navigationItem.title = "Feed"
+        feedVC.tabBarItem.title = "Feed"
+        feedVC.tabBarItem.image = .init(systemName: "rectangle.on.rectangle")
+//        UINavigationBar.appearance().backgroundColor = .secondarySystemBackground
+        profileVC.tabBarItem.image = .init(systemName: "person")
+        profileVC.view.backgroundColor = .yellow
+        profileVC.navigationController?.title = "Profile"
+        profileVC.tabBarItem.title = "Profile"
+        tabBar.viewControllers = [feedVC, profileVC]
+        UITabBar.appearance().backgroundColor = .secondarySystemBackground
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

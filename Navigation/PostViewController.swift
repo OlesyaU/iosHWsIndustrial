@@ -8,22 +8,16 @@
 import UIKit
 
 class PostViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
+        view.backgroundColor = .systemPink
+        navigationController?.navigationBar.barStyle = .black
+        navigationItem.rightBarButtonItem = .init(title: "Info", style: .plain, target: self, action: #selector(barButtonPush))
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @objc private func barButtonPush(){
+        navigationController?.present(InfoViewController(), animated: true, completion: nil)
     }
-    */
-
+    
 }
