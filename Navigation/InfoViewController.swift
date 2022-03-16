@@ -29,7 +29,7 @@ class InfoViewController: UIViewController {
     }
     
     @objc private func buttonTap(_sender: UIButton) {
-        let alert = UIAlertController(title: "OOPS", message: "Something wrong!Run!", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "OOPS", message: "Something wrong!Run!", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "I understand", style: .default, handler:  {
             _ in print("I understand")
@@ -38,8 +38,9 @@ class InfoViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "I need more info", style: .default, handler: {  _ in print("I need more info")
         }))
         
-        self.present(alert, animated: true, completion: nil)
-        print("Info button tapped")
+        self.present(alert, animated: true, completion: {
+            print("Info button tapped")
+        })
     }
     
 }
