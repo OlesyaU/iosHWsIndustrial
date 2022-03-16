@@ -31,11 +31,11 @@ class InfoViewController: UIViewController {
     @objc private func buttonTap(_sender: UIButton) {
         let alert = UIAlertController(title: "OOPS", message: "Something wrong!Run!", preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: "I understand", style: .default, handler:  {
+        alert.addAction(UIAlertAction(title: "I understand", style: .cancel, handler:  {
             _ in print("I understand")
         }))
         
-        alert.addAction(UIAlertAction(title: "I need more info", style: .default, handler: {  _ in print("I need more info")
+        alert.addAction(UIAlertAction(title: "I need more info", style: .destructive, handler: {  _ in print("I need more info")
         }))
         
         self.present(alert, animated: true, completion: {
