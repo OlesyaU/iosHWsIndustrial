@@ -38,7 +38,7 @@ class ProfileHeaderView: UIView {
     }()
     
     
-    private let statusLabel: UILabel = {
+    private lazy var statusLabel: UILabel = {
         let label = UILabel ()
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         label.textColor = .gray
@@ -47,7 +47,6 @@ class ProfileHeaderView: UIView {
         label.numberOfLines = 0
         label.isUserInteractionEnabled = true
         label.translatesAutoresizingMaskIntoConstraints = false
-//            не работает и мне понятно почему
         let gesture = UITapGestureRecognizer(target: self, action: #selector(tap(_:)))
         gesture.numberOfTouchesRequired = 1
         gesture.numberOfTapsRequired = 1
@@ -105,10 +104,9 @@ class ProfileHeaderView: UIView {
     }
     
     @objc private func buttonPressed() {
-        showStatusButton.setTitle("Set status", for: .normal)
-        statusTextField.alpha = 1
-        statusTextField.becomeFirstResponder()
-        animateButton()
+        statusTextField.isHidden = true
+        statusLabel.textColor = .black
+        
         print(statusLabel.text!)
     }
    
@@ -167,8 +165,11 @@ class ProfileHeaderView: UIView {
     }
     
     @objc private func tap(_ sender: UITapGestureRecognizer){
-//        сюда даже не заходит(((
         if sender.state == .ended {
+            showStatusButton.setTitle("Set status", for: .normal)
+            statusTextField.alpha = 1
+            statusTextField.becomeFirstResponder()
+            animateButton()
         print("tap is work")
         }
     }
