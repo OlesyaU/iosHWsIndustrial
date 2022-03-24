@@ -8,8 +8,10 @@
 import UIKit
 
 class ProfileHeaderView: UIView {
+    
     private let const: CGFloat = 16
     private var buttonY : CGFloat = 0.0
+    private var statusText: String = ""
   
     private let avatarImage: UIImageView = {
         let image = UIImageView()
@@ -32,9 +34,9 @@ class ProfileHeaderView: UIView {
         label.text = "Кот Томас"
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
-      
         return label
     }()
+    
     
     private let statusLabel: UILabel = {
         let label = UILabel ()
@@ -43,15 +45,20 @@ class ProfileHeaderView: UIView {
         label.textAlignment = .left
         label.text = "Тут будет статус"
         label.numberOfLines = 0
+        label.isUserInteractionEnabled = true
         label.translatesAutoresizingMaskIntoConstraints = false
-      
+//            не работает и мне понятно почему
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(tap(_:)))
+        gesture.numberOfTouchesRequired = 1
+        gesture.numberOfTapsRequired = 1
+        label.addGestureRecognizer(gesture)
         return label
     }()
     
     private let statusTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.alpha = 0.5
+        textField.alpha = 0
         textField.backgroundColor = .white
         textField.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         textField.clipsToBounds = true
@@ -60,12 +67,18 @@ class ProfileHeaderView: UIView {
         textField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         textField.textColor = .black
         textField.placeholder = "Тут я пишу статус"
+        textField.allowsEditingTextAttributes = true
+        textField.clearsOnBeginEditing = true
+        textField.isUserInteractionEnabled = true
+        textField.keyboardType = .default
+        textField.keyboardAppearance = .default
+        textField.addTarget(self, action: #selector(textFieldEditing(_:)), for: .editingChanged)
         return textField
     } ()
     
     private let showStatusButton: UIButton = {
         let button = UIButton()
-      button.translatesAutoresizingMaskIntoConstraints = false
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .systemBlue
         button.layer.cornerRadius = 4
         button.setTitle("Show status", for: .normal)
@@ -86,14 +99,15 @@ class ProfileHeaderView: UIView {
         addSubview(showStatusButton)
         addSubview(statusLabel)
         addSubview(statusTextField)
+      
         setupConstraints()
         buttonY = checkButtonOrigin()
-      }
+    }
     
     @objc private func buttonPressed() {
-
         showStatusButton.setTitle("Set status", for: .normal)
         statusTextField.alpha = 1
+        statusTextField.becomeFirstResponder()
         animateButton()
         print(statusLabel.text!)
     }
@@ -126,22 +140,36 @@ class ProfileHeaderView: UIView {
             ])
     }
     
-    private func checkButtonOrigin() -> CGFloat{
-//        тут мы просто находим какой игрек был изначально, чтобы потом его увеличить на размер полей и констрейнт, чтобы было как в макете , а вообще можно обойтись без
+    private func checkButtonOrigin() -> CGFloat {
+//        тут мы просто находим какой "y" был изначально, чтобы потом его увеличить на размер полей и констрейнт, чтобы было как в макете , а вообще можно обойтись без
 //        let buttonFrame = showStatusButton.accessibilityFrame
 //        let y = buttonFrame.origin.y, но я оставлю чтоб было понятно откуда я всё взяла.Ну и принт можно убрать) потом
+//        и всё было бы прекрасно, ели бы работало на разных устройствах..но работает только на 8... не знаю, возможно у меня что-то с xcod-ом но как это вылечить мне неведомо
         
         let buttonFrame = showStatusButton.accessibilityFrame
         let y = buttonFrame.origin.y
         buttonY = showStatusButton.frame.origin.y
         print(buttonFrame, y, buttonY)
         return y
-        }
-    private func animateButton() {
+    }
+    
+    @objc private func animateButton() {
         let statusTextHeight = statusTextField.bounds.height
         let showButtonHeight = showStatusButton.bounds.height
         let newY = buttonY + statusTextHeight + showButtonHeight + const
         showStatusButton.frame.origin = CGPoint(x: const, y: newY)
- }
+    }
+  
+    @objc private func textFieldEditing(_ textfield: UITextField) {
+        statusText = statusTextField.text ?? "text is lost"
+        statusLabel.text = statusText
+        print("textFieldEditing обновил статус и переменную")
+    }
     
+    @objc private func tap(_ sender: UITapGestureRecognizer){
+//        сюда даже не заходит(((
+        if sender.state == .ended {
+        print("tap is work")
+        }
+    }
 }
