@@ -10,14 +10,16 @@ import UIKit
 class ProfileHeaderView: UIView {
     
     private let const: CGFloat = 16
-    private var buttonY : CGFloat = 0.0
     private var statusText: String = ""
-  
+    
+    private var statusTextFieldHeightConstraint: NSLayoutConstraint?
+    private var showStatusButtonTopConstraint: NSLayoutConstraint?
+    
     private let avatarImage: UIImageView = {
         let image = UIImageView()
         image.bounds.size = CGSize(width: 100, height: 100)
         image.image = UIImage(named: "Томас")
-       image.contentMode = .scaleAspectFill
+        image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
         image.layer.borderWidth = 3
         image.layer.borderColor = CGColor(red: 255, green: 255, blue: 255, alpha: 1)
@@ -37,27 +39,23 @@ class ProfileHeaderView: UIView {
         return label
     }()
     
-    
     private lazy var statusLabel: UILabel = {
         let label = UILabel ()
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         label.textColor = .gray
         label.textAlignment = .left
         label.text = "Тут будет статус"
-        label.numberOfLines = 0
+        label.numberOfLines = 1
         label.isUserInteractionEnabled = true
         label.translatesAutoresizingMaskIntoConstraints = false
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(tap(_:)))
-        gesture.numberOfTouchesRequired = 1
-        gesture.numberOfTapsRequired = 1
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(statusLabelTapped(_:)))
         label.addGestureRecognizer(gesture)
         return label
     }()
     
-    private let statusTextField: UITextField = {
+    private lazy var statusTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.alpha = 0
         textField.backgroundColor = .white
         textField.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         textField.clipsToBounds = true
@@ -75,7 +73,7 @@ class ProfileHeaderView: UIView {
         return textField
     } ()
     
-    private let showStatusButton: UIButton = {
+    private lazy var showStatusButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .systemBlue
@@ -87,90 +85,103 @@ class ProfileHeaderView: UIView {
         button.layer.shadowColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
         button.layer.shadowRadius = 4
         button.layer.shadowOpacity = 0.7
-        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(showStatusButtonTapped), for: .touchUpInside)
         return button
     }()
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         addSubview(avatarImage)
         addSubview(nameLabel)
         addSubview(showStatusButton)
         addSubview(statusLabel)
         addSubview(statusTextField)
-      
+        
         setupConstraints()
-        buttonY = checkButtonOrigin()
     }
     
-    @objc private func buttonPressed() {
-        statusTextField.isHidden = true
-        statusLabel.textColor = .black
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        addSubview(avatarImage)
+        addSubview(nameLabel)
+        addSubview(showStatusButton)
+        addSubview(statusLabel)
+        addSubview(statusTextField)
         
-        print(statusLabel.text!)
+        setupConstraints()
     }
-   
+    
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            showStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: const),
-            showStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -const),
-            showStatusButton.heightAnchor.constraint(equalToConstant: 40),
-            showStatusButton.topAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: const),
-            
-            avatarImage.topAnchor.constraint(equalTo: self.topAnchor, constant: const),
-            avatarImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: const),
-            avatarImage.widthAnchor.constraint(equalToConstant:100),
+            avatarImage.topAnchor.constraint(equalTo: topAnchor, constant: const),
+            avatarImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: const),
+            avatarImage.widthAnchor.constraint(equalToConstant: 100),
             avatarImage.heightAnchor.constraint(equalToConstant: 100),
             
-            nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 27),
+            nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 27),
             nameLabel.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: const),
-            nameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -const),
-            nameLabel.heightAnchor.constraint(equalToConstant: 40),
+            nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -const),
             
-            statusLabel.bottomAnchor.constraint(equalTo: showStatusButton.topAnchor, constant: -34),
+            statusLabel.bottomAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: -27),
             statusLabel.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: const),
-            statusLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -const),
+            statusLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -const),
             
             statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: const/2),
-            statusTextField.bottomAnchor.constraint(equalTo: showStatusButton.topAnchor, constant: const),
+            statusTextField.heightAnchor.constraint(equalToConstant: 40),
             statusTextField.leadingAnchor.constraint(equalTo: statusLabel.leadingAnchor),
-            statusTextField.trailingAnchor.constraint(equalTo: showStatusButton.trailingAnchor)
-            ])
-    }
-    
-    private func checkButtonOrigin() -> CGFloat {
-//        тут мы просто находим какой "y" был изначально, чтобы потом его увеличить на размер полей и констрейнт, чтобы было как в макете , а вообще можно обойтись без
-//        let buttonFrame = showStatusButton.accessibilityFrame
-//        let y = buttonFrame.origin.y, но я оставлю чтоб было понятно откуда я всё взяла.Ну и принт можно убрать) потом
-//        и всё было бы прекрасно, ели бы работало на разных устройствах..но работает только на 8... не знаю, возможно у меня что-то с xcod-ом но как это вылечить мне неведомо
+            statusTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -const),
+            
+            showStatusButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: const),
+            showStatusButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -const),
+            showStatusButton.heightAnchor.constraint(equalToConstant: 40),
+        ])
         
-        let buttonFrame = showStatusButton.accessibilityFrame
-        let y = buttonFrame.origin.y
-        buttonY = showStatusButton.frame.origin.y
-        print(buttonFrame, y, buttonY)
-        return y
+        //        констрейнты, которые мы будем анимировать, чтобы кнопка опускалась вниз
+        showStatusButtonTopConstraint = showStatusButton.topAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: const)
+        showStatusButtonTopConstraint?.isActive = true
+        
+        statusTextFieldHeightConstraint = statusTextField.heightAnchor.constraint(equalToConstant: .zero)
+        statusTextFieldHeightConstraint?.isActive = true
     }
     
-    @objc private func animateButton() {
-        let statusTextHeight = statusTextField.bounds.height
-        let showButtonHeight = showStatusButton.bounds.height
-        let newY = buttonY + statusTextHeight + showButtonHeight + const
-        showStatusButton.frame.origin = CGPoint(x: const, y: newY)
+    @objc private func showStatusButtonTapped() {
+        hideStatusTextField { [unowned self] completed in
+            guard completed else { return }
+            self.statusLabel.text = self.statusText
+        }
+        statusLabel.textColor = .black
+        print(" Status Text : \(statusText)")
     }
-  
+    
+    private func hideStatusTextField(completion: @escaping (Bool) -> Void ) {
+        layoutIfNeeded()
+        statusTextFieldHeightConstraint?.constant = .zero
+        showStatusButtonTopConstraint?.constant = const
+        
+        UIView.animate(withDuration: 0.25, animations: {
+            self.layoutIfNeeded()
+        },
+                       completion: completion
+        )
+    }
+    
     @objc private func textFieldEditing(_ textfield: UITextField) {
         statusText = statusTextField.text ?? "text is lost"
-        statusLabel.text = statusText
-        print("textFieldEditing обновил статус и переменную")
     }
     
-    @objc private func tap(_ sender: UITapGestureRecognizer){
-        if sender.state == .ended {
-            showStatusButton.setTitle("Set status", for: .normal)
-            statusTextField.alpha = 1
-            statusTextField.becomeFirstResponder()
-            animateButton()
+    private func showStatusTextfield(){
+        layoutIfNeeded()
+        statusTextFieldHeightConstraint?.constant = 40
+        showStatusButtonTopConstraint?.constant = 32
+        UIView.animate(withDuration: 0.25, animations: {
+            self.layoutIfNeeded()
+        })
+    }
+    
+    @objc private func statusLabelTapped(_ sender: UITapGestureRecognizer){
+        showStatusButton.setTitle("Set status", for: .normal)
+        showStatusTextfield()
+        statusTextField.becomeFirstResponder()
         print("tap is work")
-        }
     }
 }
