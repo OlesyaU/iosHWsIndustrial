@@ -11,10 +11,7 @@ class ProfileHeaderView: UIView {
     
     private let const: CGFloat = 16
     private var statusText: String = ""
-    
-    private var statusTextFieldHeightConstraint: NSLayoutConstraint?
-    private var showStatusButtonTopConstraint: NSLayoutConstraint?
-    
+
     private let avatarImage: UIImageView = {
         let image = UIImageView()
         image.bounds.size = CGSize(width: 100, height: 100)
@@ -48,8 +45,6 @@ class ProfileHeaderView: UIView {
         label.numberOfLines = 1
         label.isUserInteractionEnabled = true
         label.translatesAutoresizingMaskIntoConstraints = false
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(statusLabelTapped(_:)))
-        label.addGestureRecognizer(gesture)
         return label
     }()
     
@@ -102,13 +97,6 @@ class ProfileHeaderView: UIView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        addSubview(avatarImage)
-        addSubview(nameLabel)
-        addSubview(showStatusButton)
-        addSubview(statusLabel)
-        addSubview(statusTextField)
-        
-        setupConstraints()
     }
     
     private func setupConstraints() {
@@ -122,8 +110,8 @@ class ProfileHeaderView: UIView {
             nameLabel.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: const),
             nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -const),
             
-            statusLabel.bottomAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: -27),
-            statusLabel.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: const),
+            statusLabel.bottomAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: -const),
+            statusLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             statusLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -const),
             
             statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: const/2),
@@ -134,54 +122,24 @@ class ProfileHeaderView: UIView {
             showStatusButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: const),
             showStatusButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -const),
             showStatusButton.heightAnchor.constraint(equalToConstant: 40),
+            showStatusButton.topAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: 40)
+
         ])
-        
-        //        констрейнты, которые мы будем анимировать, чтобы кнопка опускалась вниз
-        showStatusButtonTopConstraint = showStatusButton.topAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: const)
-        showStatusButtonTopConstraint?.isActive = true
-        
-        statusTextFieldHeightConstraint = statusTextField.heightAnchor.constraint(equalToConstant: .zero)
-        statusTextFieldHeightConstraint?.isActive = true
-    }
+        }
     
     @objc private func showStatusButtonTapped() {
-        hideStatusTextField { [unowned self] completed in
-            guard completed else { return }
             self.statusLabel.text = self.statusText
-        }
         statusLabel.textColor = .black
+        statusTextField.endEditing(true)
+        statusTextField.resignFirstResponder()
+        statusTextField.text = nil
         print(" Status Text : \(statusText)")
     }
     
-    private func hideStatusTextField(completion: @escaping (Bool) -> Void ) {
-        layoutIfNeeded()
-        statusTextFieldHeightConstraint?.constant = .zero
-        showStatusButtonTopConstraint?.constant = const
-        
-        UIView.animate(withDuration: 0.25, animations: {
-            self.layoutIfNeeded()
-        },
-                       completion: completion
-        )
-    }
-    
     @objc private func textFieldEditing(_ textfield: UITextField) {
+        statusTextField.becomeFirstResponder()
+        showStatusButton.setTitle("Set status", for: .normal)
         statusText = statusTextField.text ?? "text is lost"
     }
-    
-    private func showStatusTextfield(){
-        layoutIfNeeded()
-        statusTextFieldHeightConstraint?.constant = 40
-        showStatusButtonTopConstraint?.constant = 32
-        UIView.animate(withDuration: 0.25, animations: {
-            self.layoutIfNeeded()
-        })
-    }
-    
-    @objc private func statusLabelTapped(_ sender: UITapGestureRecognizer){
-        showStatusButton.setTitle("Set status", for: .normal)
-        showStatusTextfield()
-        statusTextField.becomeFirstResponder()
-        print("tap is work")
-    }
+
 }

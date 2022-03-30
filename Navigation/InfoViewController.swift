@@ -12,7 +12,7 @@ class InfoViewController: UIViewController {
     let goToAlertButton: UIButton = {
         let button = UIButton()
         button.frame = CGRect(origin: CGPoint(x: 100, y: 150), size: CGSize(width: 150, height: 30))
-        button.backgroundColor = .systemMint
+        button.backgroundColor = .systemCyan
         button.layer.cornerRadius = 10
         button.titleLabel?.textColor = .white
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
