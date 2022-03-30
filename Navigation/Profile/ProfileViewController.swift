@@ -13,7 +13,7 @@ class ProfileViewController: UIViewController {
     private let newButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .systemMint
+        button.backgroundColor = .systemGreen
         button.layer.cornerRadius = 4
         button.setTitle("New title", for: .normal)
         button.tintColor = .white
