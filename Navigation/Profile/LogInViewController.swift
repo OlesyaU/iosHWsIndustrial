@@ -9,16 +9,20 @@ import UIKit
 
 class LogInViewController: UIViewController {
     
-    private lazy var scrollView: UIScrollView =  {
+    private let nc = NotificationCenter.default
+    
+    private let scrollView: UIScrollView =  {
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
-        scroll.backgroundColor = .systemBlue
+        scroll.backgroundColor = .systemMint
         scroll.isUserInteractionEnabled = true
         scroll.bounces = true
+        scroll.contentInsetAdjustmentBehavior = .scrollableAxes
+        scroll.verticalScrollIndicatorInsets = .zero
         return scroll
     }()
     
-    private lazy var contentView: UIView = {
+    private let contentView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .systemYellow
@@ -56,11 +60,11 @@ class LogInViewController: UIViewController {
         textField.placeholder = "Email or phone"
         textField.autocapitalizationType = .none
         textField.allowsEditingTextAttributes = true
-//        textField.clearsOnBeginEditing = true
+        textField.clearsOnBeginEditing = true
         textField.isUserInteractionEnabled = true
-        textField.keyboardType = .default
-        textField.keyboardAppearance = .default
-//        textField.addTarget(self, action: #selector(textFieldEditing(_:)), for: .editingChanged)
+        textField.delegate = self
+        
+        //        textField.addTarget(self, action: #selector(textFieldEditing(_:)), for: .editingChanged)
         return textField
     } ()
     
@@ -72,13 +76,12 @@ class LogInViewController: UIViewController {
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         textField.textColor = .black
         textField.placeholder = "Password"
-        textField.allowsEditingTextAttributes = true
+        //        textField.allowsEditingTextAttributes = true
         textField.isSecureTextEntry = true
         textField.clearsOnBeginEditing = true
         textField.isUserInteractionEnabled = true
-        textField.keyboardType = .default
-        textField.keyboardAppearance = .default
-//        textField.addTarget(self, action: #selector(textFieldEditing(_:)), for: .editingChanged)
+        textField.delegate = self
+        //        textField.addTarget(self, action: #selector(textFieldEditing(_:)), for: .editingChanged)
         return textField
     } ()
     private lazy var logInButton: UIButton = {
@@ -93,15 +96,25 @@ class LogInViewController: UIViewController {
         return button
     }()
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-       navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.isHidden = true
         layout()
-    
-        
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        nc.addObserver(self, selector: #selector(keyboardShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        nc.addObserver(self, selector: #selector(keyboardHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        nc.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        nc.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    
     
     private func layout() {
         view.addSubview(scrollView)
@@ -114,40 +127,41 @@ class LogInViewController: UIViewController {
         let standartConstraint: CGFloat = 16
         
         NSLayoutConstraint.activate([
-//             scrollView constraints
+            //             scrollView constraints
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-
+            
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             
-        //            logo constraints
+            //            logo constraints
             logo.heightAnchor.constraint(equalToConstant: logoSize),
             logo.widthAnchor.constraint(equalToConstant: logoSize),
             logo.topAnchor.constraint(equalTo: contentView.topAnchor, constant: logoConstraint),
             logo.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-
-//    logInButton constraints
-            logInButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: standartConstraint),
-            logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: standartConstraint),
-            logInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -standartConstraint),
-            logInButton.heightAnchor.constraint(equalToConstant: logoSize/2),
-            logInButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
             //           stackView constraints
             stackView.heightAnchor.constraint(equalToConstant: logoSize),
             stackView.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: logoConstraint),
             stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: standartConstraint),
-            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -standartConstraint)
-        
+            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -standartConstraint),
+            
+            //    logInButton constraints
+            logInButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: standartConstraint),
+            logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: standartConstraint),
+            logInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -standartConstraint),
+            logInButton.heightAnchor.constraint(equalToConstant: logoSize/2),
+            logInButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
-}
+    }
+    
     @objc private func logInButtonTapped(_ sender: UIButton) {
+        navigationController?.pushViewController(ProfileViewController(), animated: true)
         switch sender.state {
             case .normal:
                 sender.alpha = 1
@@ -159,8 +173,26 @@ class LogInViewController: UIViewController {
                 sender.alpha = 0.8
             default:
                 break
+                
         }
     }
     
+    @objc private func keyboardShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            scrollView.contentInset.bottom = keyboardSize.height
+            scrollView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+        }
+    }
+    
+    @objc private func keyboardHide(notification: NSNotification) {
+        scrollView.contentInset.bottom = .zero
+        scrollView.verticalScrollIndicatorInsets = .zero
+    }
+}
 
+extension LogInViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
+        return true
+    }
 }
