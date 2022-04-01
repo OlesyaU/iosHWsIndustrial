@@ -13,7 +13,7 @@ class FeedViewController: UIViewController {
     private let stackView: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.backgroundColor = .systemIndigo
+        stack.backgroundColor = .systemPink
         stack.distribution = .fillEqually
         stack.axis = .vertical
         stack.spacing = 10
@@ -47,7 +47,7 @@ class FeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemMint
+        view.backgroundColor = .systemGreen
         title = post.title
         navigationItem.title = post.title
         view.addSubview(stackView)
