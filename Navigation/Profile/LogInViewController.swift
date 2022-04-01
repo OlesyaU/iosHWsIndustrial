@@ -63,8 +63,7 @@ class LogInViewController: UIViewController {
         textField.clearsOnBeginEditing = true
         textField.isUserInteractionEnabled = true
         textField.delegate = self
-        
-        //        textField.addTarget(self, action: #selector(textFieldEditing(_:)), for: .editingChanged)
+        textField.autocorrectionType = .no
         return textField
     } ()
     
@@ -76,14 +75,14 @@ class LogInViewController: UIViewController {
         textField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         textField.textColor = .black
         textField.placeholder = "Password"
-        //        textField.allowsEditingTextAttributes = true
         textField.isSecureTextEntry = true
         textField.clearsOnBeginEditing = true
         textField.isUserInteractionEnabled = true
         textField.delegate = self
-        //        textField.addTarget(self, action: #selector(textFieldEditing(_:)), for: .editingChanged)
+        textField.autocorrectionType = .no
         return textField
     } ()
+    
     private lazy var logInButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -113,8 +112,6 @@ class LogInViewController: UIViewController {
         nc.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         nc.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
-    
     
     private func layout() {
         view.addSubview(scrollView)
@@ -181,12 +178,14 @@ class LogInViewController: UIViewController {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             scrollView.contentInset.bottom = keyboardSize.height
             scrollView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+            print(#function)
         }
     }
     
     @objc private func keyboardHide(notification: NSNotification) {
         scrollView.contentInset.bottom = .zero
         scrollView.verticalScrollIndicatorInsets = .zero
+        print(#function)
     }
 }
 
