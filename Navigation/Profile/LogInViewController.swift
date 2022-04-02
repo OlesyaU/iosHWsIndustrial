@@ -14,7 +14,6 @@ class LogInViewController: UIViewController {
     private let scrollView: UIScrollView =  {
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
-        scroll.backgroundColor = .systemMint
         scroll.isUserInteractionEnabled = true
         scroll.bounces = true
         scroll.contentInsetAdjustmentBehavior = .scrollableAxes
@@ -25,7 +24,6 @@ class LogInViewController: UIViewController {
     private let contentView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .systemYellow
         return view
         
     }()
