@@ -12,13 +12,12 @@ class ProfileViewController: UIViewController {
     private let posts =  Post.posts()
     
     private lazy var tableView: UITableView = {
-        let table = UITableView()
+        let table = UITableView(frame: .zero, style: .grouped)
         table.translatesAutoresizingMaskIntoConstraints = false
         table.backgroundColor = .systemGray4
         table.dataSource = self
         table.delegate = self
         table.register(PostTableViewCell.self, forCellReuseIdentifier: String(describing: PostTableViewCell.self))
-        table.sectionHeaderHeight = 220
         return table
     }()
     
@@ -28,7 +27,7 @@ class ProfileViewController: UIViewController {
         title = "Profile"
         layout()
     }
-   
+    
     private func layout() {
         view.addSubview(tableView)
         NSLayoutConstraint.activate([
@@ -56,20 +55,7 @@ extension ProfileViewController: UITableViewDataSource {
 
 extension ProfileViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        UITableView.automaticDimension
-    }
-    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = ProfileHeaderView()
-        header.translatesAutoresizingMaskIntoConstraints = false
-        tableView.addSubview(header)
-        NSLayoutConstraint.activate([
-            header.trailingAnchor.constraint(equalTo: tableView.trailingAnchor),
-            header.leadingAnchor.constraint(equalTo: tableView.leadingAnchor),
-            header.topAnchor.constraint(equalTo: tableView.topAnchor),
-            header.widthAnchor.constraint(equalTo: tableView.widthAnchor)
-        ])
-    return header
+        ProfileHeaderView()
     }
 }

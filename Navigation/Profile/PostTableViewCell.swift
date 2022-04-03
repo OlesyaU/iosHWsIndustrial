@@ -9,16 +9,6 @@ import UIKit
 
 class PostTableViewCell: UITableViewCell {
     
-//   var post: Post? {
-//        didSet{
-//            image.image = UIImage(named: post?.image ?? "" )
-//            authorLabel.text = post?.author
-//            descriptionLabel.text = post?.description
-//            likesLabel.text = "Likes: \(String(describing: post?.likes))"
-//            viewsLabel.text = "Views: \(String(describing: post?.views))"
-//        }
-//    }
-    
   private let image: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -77,7 +67,7 @@ class PostTableViewCell: UITableViewCell {
         [image, likesLabel, descriptionLabel, authorLabel, viewsLabel].forEach {contentView.addSubview($0)
         }
         let standartConst: CGFloat = 16
-        
+      
         NSLayoutConstraint.activate([
             authorLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: standartConst),
             authorLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: standartConst),

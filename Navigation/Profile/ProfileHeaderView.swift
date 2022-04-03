@@ -10,7 +10,7 @@ import UIKit
 class ProfileHeaderView: UIView {
     
     private var statusText: String = ""
-
+    
     private let avatarImage: UIImageView = {
         let image = UIImageView()
         image.bounds.size = CGSize(width: 100, height: 100)
@@ -99,7 +99,7 @@ class ProfileHeaderView: UIView {
     }
     
     private func setupConstraints() {
-    let const: CGFloat = 16
+        let const: CGFloat = 16
         
         NSLayoutConstraint.activate([
             avatarImage.topAnchor.constraint(equalTo: topAnchor, constant: const),
@@ -123,13 +123,14 @@ class ProfileHeaderView: UIView {
             showStatusButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: const),
             showStatusButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -const),
             showStatusButton.heightAnchor.constraint(equalToConstant: 40),
-            showStatusButton.topAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: 40)
-
+            showStatusButton.topAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: 40),
+            showStatusButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -const)
+            
         ])
-        }
+    }
     
     @objc private func showStatusButtonTapped() {
-            self.statusLabel.text = self.statusText
+        self.statusLabel.text = self.statusText
         statusLabel.textColor = .black
         statusTextField.endEditing(true)
         statusTextField.resignFirstResponder()
@@ -142,5 +143,5 @@ class ProfileHeaderView: UIView {
         showStatusButton.setTitle("Set status", for: .normal)
         statusText = statusTextField.text ?? "text is lost"
     }
-
+    
 }

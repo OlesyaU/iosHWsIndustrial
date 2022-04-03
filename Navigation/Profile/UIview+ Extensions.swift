@@ -9,8 +9,5 @@ import Foundation
 import UIKit
 
 extension UIView {
-    
-    func identifier() -> String {
-        return self.description
-    }
+    static let identifier = String(describing: self)
 }
