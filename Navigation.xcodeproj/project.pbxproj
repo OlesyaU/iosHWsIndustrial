@@ -17,6 +17,8 @@
 		76CF874527DF431C0010F427 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF874427DF431C0010F427 /* PostViewController.swift */; };
 		76CF876B27E0D2780010F427 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF876A27E0D2780010F427 /* Post.swift */; };
 		76CF876D27E0D4D90010F427 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF876C27E0D4D90010F427 /* InfoViewController.swift */; };
+		76D0007027F8A00200E9077D /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D0006F27F8A00200E9077D /* PostTableViewCell.swift */; };
+		76D0007227F956CA00E9077D /* UIview+ Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76D0007127F956CA00E9077D /* UIview+ Extensions.swift */; };
 		76EB4AFD27F6EE9400107A11 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EB4AFC27F6EE9400107A11 /* LogInViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +35,8 @@
 		76CF874427DF431C0010F427 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		76CF876A27E0D2780010F427 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		76CF876C27E0D4D90010F427 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		76D0006F27F8A00200E9077D /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
+		76D0007127F956CA00E9077D /* UIview+ Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIview+ Extensions.swift"; sourceTree = "<group>"; };
 		76EB4AFC27F6EE9400107A11 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -85,6 +89,8 @@
 			children = (
 				763B9A0127E9FB8300AE78DD /* ProfileHeaderView.swift */,
 				76CF874227DF42D00010F427 /* ProfileViewController.swift */,
+				76D0006F27F8A00200E9077D /* PostTableViewCell.swift */,
+				76D0007127F956CA00E9077D /* UIview+ Extensions.swift */,
 				76EB4AFC27F6EE9400107A11 /* LogInViewController.swift */,
 			);
 			path = Profile;
@@ -167,7 +173,9 @@
 				76CF876D27E0D4D90010F427 /* InfoViewController.swift in Sources */,
 				76CF876B27E0D2780010F427 /* Post.swift in Sources */,
 				7607E4C527D9FAB1005D58DF /* SceneDelegate.swift in Sources */,
+				76D0007027F8A00200E9077D /* PostTableViewCell.swift in Sources */,
 				76CF874527DF431C0010F427 /* PostViewController.swift in Sources */,
+				76D0007227F956CA00E9077D /* UIview+ Extensions.swift in Sources */,
 				766EF06727F49051004F0607 /* ProfileHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

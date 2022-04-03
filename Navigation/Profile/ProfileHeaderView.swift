@@ -9,7 +9,6 @@ import UIKit
 
 class ProfileHeaderView: UIView {
     
-    private let const: CGFloat = 16
     private var statusText: String = ""
 
     private let avatarImage: UIImageView = {
@@ -100,6 +99,8 @@ class ProfileHeaderView: UIView {
     }
     
     private func setupConstraints() {
+    let const: CGFloat = 16
+        
         NSLayoutConstraint.activate([
             avatarImage.topAnchor.constraint(equalTo: topAnchor, constant: const),
             avatarImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: const),
