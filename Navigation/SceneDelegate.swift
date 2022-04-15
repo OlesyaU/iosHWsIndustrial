@@ -10,7 +10,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
-    private let profileVC = UINavigationController(rootViewController: ProfileViewController())
+    private let profileVC = UINavigationController(rootViewController: LogInViewController())
     private let feedVC = UINavigationController(rootViewController: FeedViewController())
     private let tabBar = UITabBarController()
     
