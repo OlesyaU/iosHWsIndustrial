@@ -9,7 +9,7 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
-    private let post = Post(title: "Feed")
+//    private let post = Post(title: "Feed")
     private let stackView: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -48,8 +48,8 @@ class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGreen
-        title = post.title
-        navigationItem.title = post.title
+        title = "Feed"
+        navigationItem.title = "Feed"
         view.addSubview(stackView)
         stackViewLayout()
     }
