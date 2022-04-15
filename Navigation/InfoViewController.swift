@@ -24,7 +24,7 @@ class InfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .orange
+        view.backgroundColor = .systemYellow
         view.addSubview(goToAlertButton)
     }
     
