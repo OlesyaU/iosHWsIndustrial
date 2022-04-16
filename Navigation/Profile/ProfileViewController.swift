@@ -17,7 +17,8 @@ class ProfileViewController: UIViewController {
         table.backgroundColor = .systemGray4
         table.dataSource = self
         table.delegate = self
-        table.register(PostTableViewCell.self, forCellReuseIdentifier: String(describing: PostTableViewCell.self))
+        table.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifier)
+        table.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifier)
         return table
     }()
     
@@ -37,6 +38,13 @@ class ProfileViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.row == 0 {
+            navigationController?.pushViewController(PhotosViewController(), animated: true)
+        }
+    }
 }
 
 extension ProfileViewController: UITableViewDataSource {
@@ -47,10 +55,17 @@ extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let post = posts[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: PostTableViewCell.self), for: indexPath) as! PostTableViewCell
+        let firstCell = tableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifier, for: indexPath) as! PhotosTableViewCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell 
         cell.configure(post: post)
-        return cell
-    }
+        
+        if  indexPath.row == 0 {
+            return firstCell
+        } else {
+            
+            return cell
+        }
+        }
 }
 
 extension ProfileViewController: UITableViewDelegate {
@@ -58,4 +73,5 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         ProfileHeaderView()
     }
+    
 }
