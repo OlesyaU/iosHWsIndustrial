@@ -11,7 +11,7 @@ class ProfileHeaderView: UIView {
     
     private var statusText: String = ""
     
-    private let avatarImage: UIImageView = {
+    private lazy var avatarImage: UIImageView = {
         let image = UIImageView()
         image.bounds.size = CGSize(width: 100, height: 100)
         image.image = UIImage(named: "Томас")
@@ -21,6 +21,8 @@ class ProfileHeaderView: UIView {
         image.layer.borderColor = CGColor(red: 255, green: 255, blue: 255, alpha: 1)
         image.translatesAutoresizingMaskIntoConstraints = false
         image.layer.cornerRadius = image.bounds.height/2
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(tapToAvatar))
+//        image.addGestureRecognizer(tap)
         return image
     }()
     
@@ -143,5 +145,11 @@ class ProfileHeaderView: UIView {
         showStatusButton.setTitle("Set status", for: .normal)
         statusText = statusTextField.text ?? "text is lost"
     }
-    
+    @objc private func tapToAvatar(){
+//        UIImageView.animate(withDuration: 0.3, delay: 0, options: {
+//
+//
+//            }, animations: <#T##() -> Void#>, completion: <#T##((Bool) -> Void)?##((Bool) -> Void)?##(Bool) -> Void#>)
+    }
+
 }
