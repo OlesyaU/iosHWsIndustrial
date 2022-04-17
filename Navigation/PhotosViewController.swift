@@ -8,6 +8,7 @@
 import UIKit
 
 class PhotosViewController: UIViewController {
+    
     private let photos = Photo.photos()
     
     private lazy var collection: UICollectionView =  {
@@ -22,14 +23,14 @@ class PhotosViewController: UIViewController {
         collection.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: PhotosCollectionViewCell.identifier)
         return collection
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
         view.backgroundColor = .cyan
         title = "Photo Gallery"
         navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
-      layout()
+        layout()
     }
     private func layout(){
         view.addSubview(collection)
@@ -38,20 +39,19 @@ class PhotosViewController: UIViewController {
             collection.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collection.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             collection.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-                                    ])
+        ])
     }
-
-
 }
 
 extension PhotosViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         photos.count
-        }
+    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCollectionViewCell.identifier, for: indexPath)
-        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCollectionViewCell.identifier, for: indexPath) as! PhotosCollectionViewCell
+        let photo = photos[indexPath.item]
+        cell.configure(photo: photo)
         return cell
     }
     

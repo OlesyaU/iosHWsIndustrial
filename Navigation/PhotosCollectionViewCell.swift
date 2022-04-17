@@ -8,24 +8,21 @@
 import UIKit
 
 class PhotosCollectionViewCell: UICollectionViewCell {
-    private let photos = Photo.photos()
+
     
     
     
     private lazy var image: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        for i in photos {
-            image.image = i.photo
-        }
-//        photos.forEach({image.image = $0.photo})
-        
-        
-        return image
+//        image.image = configure()
+      return image
     }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         layout()
+//        image.image = configure()
     }
     
     required init?(coder: NSCoder) {
@@ -41,5 +38,9 @@ class PhotosCollectionViewCell: UICollectionViewCell {
         
         
         ])
+    }
+    
+func configure(photo: Photo) {
+        image.image = photo.photo
     }
 }
