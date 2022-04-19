@@ -9,25 +9,21 @@ import UIKit
 
 class PhotosCollectionViewCell: UICollectionViewCell {
 
-    
-    
-    
     private lazy var image: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-//        image.image = configure()
       return image
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         layout()
-//        image.image = configure()
-    }
+}
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     private func layout() {
         contentView.addSubview(image)
         NSLayoutConstraint.activate([
@@ -35,12 +31,10 @@ class PhotosCollectionViewCell: UICollectionViewCell {
             image.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             image.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             image.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
-        
-        
-        ])
+      ])
     }
     
-func configure(photo: Photo) {
-        image.image = photo.photo
+func configure(photo: UIImage) {
+        image.image = photo
     }
 }
