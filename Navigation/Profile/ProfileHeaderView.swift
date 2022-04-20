@@ -21,10 +21,33 @@ class ProfileHeaderView: UIView {
         image.layer.borderColor = CGColor(red: 255, green: 255, blue: 255, alpha: 1)
         image.translatesAutoresizingMaskIntoConstraints = false
         image.layer.cornerRadius = image.bounds.height/2
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(tapToAvatar))
-//        image.addGestureRecognizer(tap)
+        image.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapToAvatar))
+        image.addGestureRecognizer(tap)
         return image
     }()
+    
+    private let imageAnimation: UIImageView = {
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.sizeThatFits(UIScreen.main.bounds.size)
+        image.backgroundColor = .white
+        image.alpha = 0.8
+        image.isHidden = true
+        return image
+    }()
+    
+    private let closeButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setBackgroundImage(UIImage(named: "close"), for: .normal)
+        button.clipsToBounds = true
+        button.alpha = 0
+        button.isHidden = true
+        button.addTarget(ProfileHeaderView.self, action: #selector(closeTap), for: .touchUpInside)
+        return button
+    }()
+    
     
     private let nameLabel: UILabel = {
         let label = UILabel ()
@@ -44,7 +67,6 @@ class ProfileHeaderView: UIView {
         label.textAlignment = .left
         label.text = "Тут будет статус"
         label.numberOfLines = 1
-        label.isUserInteractionEnabled = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -87,12 +109,8 @@ class ProfileHeaderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(avatarImage)
-        addSubview(nameLabel)
-        addSubview(showStatusButton)
-        addSubview(statusLabel)
-        addSubview(statusTextField)
-        
+        [nameLabel, showStatusButton, statusLabel, statusTextField, avatarImage, closeButton ].forEach({addSubview($0)})
+        self.insertSubview(imageAnimation, at: 4)
         setupConstraints()
     }
     
@@ -101,33 +119,38 @@ class ProfileHeaderView: UIView {
     }
     
     private func setupConstraints() {
-        let const: CGFloat = 16
+        let constraint: CGFloat = 16
         
         NSLayoutConstraint.activate([
-            avatarImage.topAnchor.constraint(equalTo: topAnchor, constant: const),
-            avatarImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: const),
+            
+            avatarImage.topAnchor.constraint(equalTo: topAnchor, constant: constraint),
+            avatarImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: constraint),
             avatarImage.widthAnchor.constraint(equalToConstant: 100),
             avatarImage.heightAnchor.constraint(equalToConstant: 100),
             
             nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 27),
-            nameLabel.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: const),
-            nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -const),
+            nameLabel.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: constraint),
+            nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -constraint),
             
-            statusLabel.bottomAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: -const),
+            statusLabel.bottomAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: -constraint),
             statusLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
-            statusLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -const),
+            statusLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -constraint),
             
-            statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: const/2),
+            statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: constraint/2),
             statusTextField.heightAnchor.constraint(equalToConstant: 40),
             statusTextField.leadingAnchor.constraint(equalTo: statusLabel.leadingAnchor),
-            statusTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -const),
+            statusTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -constraint),
             
-            showStatusButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: const),
-            showStatusButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -const),
+            showStatusButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: constraint),
+            showStatusButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -constraint),
             showStatusButton.heightAnchor.constraint(equalToConstant: 40),
             showStatusButton.topAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: 40),
-            showStatusButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -const)
+            showStatusButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -constraint),
             
+            closeButton.topAnchor.constraint(equalTo: topAnchor, constant: constraint),
+            closeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -constraint),
+            closeButton.heightAnchor.constraint(equalToConstant: 20),
+            closeButton.widthAnchor.constraint(equalToConstant: 20)
         ])
     }
     
@@ -145,11 +168,42 @@ class ProfileHeaderView: UIView {
         showStatusButton.setTitle("Set status", for: .normal)
         statusText = statusTextField.text ?? "text is lost"
     }
+    
     @objc private func tapToAvatar(){
-//        UIImageView.animate(withDuration: 0.3, delay: 0, options: {
-//
-//
-//            }, animations: <#T##() -> Void#>, completion: <#T##((Bool) -> Void)?##((Bool) -> Void)?##(Bool) -> Void#>)
+        let centerX = UIScreen.main.bounds.width / 2
+        let centerY = UIScreen.main.bounds.height / 2
+        UIView.animate(withDuration:0.01, delay: 0, options:.curveEaseInOut, animations: { [self] in
+            self.imageAnimation.isHidden = false
+            self.imageAnimation.frame.size = UIScreen.main.bounds.size
+            self.layoutIfNeeded()
+        }, completion: {_ in
+            UIView.animate(withDuration: 0.5, animations: {
+                self.avatarImage.center.x = centerX
+                self.avatarImage.center.y = centerY
+                self.avatarImage.layer.cornerRadius = 0
+                self.avatarImage.transform = CGAffineTransform(scaleX: 4, y: 4)
+                self.layoutIfNeeded()
+            }, completion: {_ in
+                UIView.animate(withDuration: 0.3, delay: 0.5, animations: {
+                    self.closeButton.alpha = 0.9
+                    self.closeButton.isHidden = false
+                    self.layoutIfNeeded()
+                })
+            })
+        })
     }
+   
+    @objc private func closeTap(){
+        imageAnimation.isHidden = true
+        closeButton.isHidden = true
+        
+        
+//        UIView.animate(withDuration: 0.5) { [self] in
+//            self.imageAnimation.isHidden = true
+//            self.closeButton.isHidden = true
+//        } completion: { [self] _ in
+////            self.avatarImage.layer.cornerRadius = 50
+//        }
 
+    }
 }

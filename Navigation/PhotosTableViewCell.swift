@@ -9,8 +9,6 @@ import UIKit
 
 class PhotosTableViewCell: UITableViewCell {
     
-    private var photos = Photo.getPhotos()
-    
     private let label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -34,10 +32,8 @@ class PhotosTableViewCell: UITableViewCell {
     private lazy var image1: UIImageView = makeImageView()
     private lazy var image2: UIImageView = makeImageView()
     private lazy var image3: UIImageView = makeImageView()
-    
-    //     переделать  в стек
-    
     private lazy var image4: UIImageView = makeImageView()
+    
     private func makeImageView() -> UIImageView {
         let image =  UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -45,8 +41,7 @@ class PhotosTableViewCell: UITableViewCell {
         image.layer.cornerRadius = 6
         image.clipsToBounds = true
         return image
-        }
-    
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -56,6 +51,7 @@ class PhotosTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     func configure(photos: [UIImage]) {
         guard photos.count > 3 else  { return }
         image1.image = photos[0]
@@ -64,14 +60,15 @@ class PhotosTableViewCell: UITableViewCell {
         image4.image = photos[3]
     }
     private func layout () {
-        [label, arrow, image1, image2, image3, image4].forEach{contentView.addSubview($0)}
+        [label, arrow,image1, image2, image3, image4].forEach{contentView.addSubview($0)}
+        
         let constraint: CGFloat = 12
         let heightConst: CGFloat = 8
-        let width = (UIScreen.main.bounds.width - ((constraint * 2) + heightConst * 3))/4
+        let width: CGFloat = (UIScreen.main.bounds.width - ((constraint * 2) + heightConst * 3))/4
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: constraint),
             label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: constraint),
-            label.trailingAnchor.constraint(equalTo: arrow.leadingAnchor, constant: -heightConst),
+            label.trailingAnchor.constraint(equalTo: arrow.leadingAnchor, constant: -constraint),
             arrow.centerYAnchor.constraint(equalTo: label.centerYAnchor),
             arrow.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -constraint),
             arrow.heightAnchor.constraint(equalTo: label.heightAnchor),
@@ -100,9 +97,6 @@ class PhotosTableViewCell: UITableViewCell {
             image4.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -constraint)
         ])
     }
-    
-    
-    
 }
 
 
