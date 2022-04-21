@@ -10,6 +10,8 @@ import UIKit
 class ProfileHeaderView: UIView {
     
     private var statusText: String = ""
+    private var centerAvatar = CGPoint()
+    private let constraint: CGFloat = 16
     
     private lazy var avatarImage: UIImageView = {
         let image = UIImageView()
@@ -37,14 +39,14 @@ class ProfileHeaderView: UIView {
         return image
     }()
     
-    private let closeButton: UIButton = {
+    private lazy var closeButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setBackgroundImage(UIImage(named: "close"), for: .normal)
         button.clipsToBounds = true
         button.alpha = 0
         button.isHidden = true
-        button.addTarget(ProfileHeaderView.self, action: #selector(closeTap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -119,10 +121,8 @@ class ProfileHeaderView: UIView {
     }
     
     private func setupConstraints() {
-        let constraint: CGFloat = 16
         
         NSLayoutConstraint.activate([
-            
             avatarImage.topAnchor.constraint(equalTo: topAnchor, constant: constraint),
             avatarImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: constraint),
             avatarImage.widthAnchor.constraint(equalToConstant: 100),
@@ -152,6 +152,8 @@ class ProfileHeaderView: UIView {
             closeButton.heightAnchor.constraint(equalToConstant: 20),
             closeButton.widthAnchor.constraint(equalToConstant: 20)
         ])
+        centerAvatar = avatarImage.center
+        
     }
     
     @objc private func showStatusButtonTapped() {
@@ -172,38 +174,31 @@ class ProfileHeaderView: UIView {
     @objc private func tapToAvatar(){
         let centerX = UIScreen.main.bounds.width / 2
         let centerY = UIScreen.main.bounds.height / 2
-        UIView.animate(withDuration:0.01, delay: 0, options:.curveEaseInOut, animations: { [self] in
+        UIView.animateKeyframes(withDuration: 0.5, delay: 0) {
             self.imageAnimation.isHidden = false
+            self.avatarImage.transform = CGAffineTransform(scaleX: 4, y: 4)
             self.imageAnimation.frame.size = UIScreen.main.bounds.size
+            self.avatarImage.center.x = centerX
+            self.avatarImage.center.y = centerY
+            self.avatarImage.layer.cornerRadius = 0
             self.layoutIfNeeded()
-        }, completion: {_ in
-            UIView.animate(withDuration: 0.5, animations: {
-                self.avatarImage.center.x = centerX
-                self.avatarImage.center.y = centerY
-                self.avatarImage.layer.cornerRadius = 0
-                self.avatarImage.transform = CGAffineTransform(scaleX: 4, y: 4)
+        } completion: { _ in
+            UIView.animate(withDuration: 0.3, delay: 0.5, animations: {
+                self.closeButton.alpha = 1
+                self.closeButton.isHidden = false
                 self.layoutIfNeeded()
-            }, completion: {_ in
-                UIView.animate(withDuration: 0.3, delay: 0.5, animations: {
-                    self.closeButton.alpha = 0.9
-                    self.closeButton.isHidden = false
-                    self.layoutIfNeeded()
-                })
             })
-        })
+        }
     }
-   
-    @objc private func closeTap(){
-        imageAnimation.isHidden = true
-        closeButton.isHidden = true
-        
-        
-//        UIView.animate(withDuration: 0.5) { [self] in
-//            self.imageAnimation.isHidden = true
-//            self.closeButton.isHidden = true
-//        } completion: { [self] _ in
-////            self.avatarImage.layer.cornerRadius = 50
-//        }
-
+    
+    @objc private func closeButtonTapped() {
+        UIView.animateKeyframes(withDuration: 0.5, delay: 0, animations: {
+            self.closeButton.isHidden = true
+            self.imageAnimation.isHidden = true
+            self.avatarImage.transform = CGAffineTransform(scaleX: 1, y: 1)
+            self.avatarImage.layer.cornerRadius = self.avatarImage.bounds.height/2
+            self.avatarImage.center.x = self.centerAvatar.x + self.avatarImage.bounds.width/2 + self.constraint
+            self.avatarImage.center.y = self.centerAvatar.y + self.avatarImage.bounds.height/2 + self.constraint
+        })
     }
 }
