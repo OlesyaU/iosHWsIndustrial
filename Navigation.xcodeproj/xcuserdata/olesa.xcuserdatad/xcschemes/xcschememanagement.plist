@@ -6,13 +6,32 @@
 	<dict>
 		<key>Navigation.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+		<key>StorageService.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>1</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>7607E4BE27D9FAB1005D58DF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>76F14A3F2843B084005B0B29</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>76F14A732843C805005B0B29</key>
 		<dict>
 			<key>primary</key>
 			<true/>
