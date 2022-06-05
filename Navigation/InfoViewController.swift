@@ -9,7 +9,7 @@ import UIKit
 
 class InfoViewController: UIViewController {
     
-    let goToAlertButton: UIButton = {
+    lazy var goToAlertButton: UIButton = {
         let button = UIButton()
         button.frame = CGRect(origin: CGPoint(x: 100, y: 150), size: CGSize(width: 150, height: 30))
         button.backgroundColor = .systemCyan

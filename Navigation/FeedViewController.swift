@@ -21,7 +21,7 @@ class FeedViewController: UIViewController {
         
     }()
     
-    private var firstButton: UIButton = {
+    private lazy var firstButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 10
         button.backgroundColor = .white
@@ -33,7 +33,7 @@ class FeedViewController: UIViewController {
         return button
     }()
     
-    private var secondButton: UIButton = {
+    private lazy var secondButton: UIButton = {
         let button = UIButton()
         button.layer.cornerRadius = 10
         button.backgroundColor = .black
