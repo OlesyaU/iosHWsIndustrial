@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct Post {
-    let author: String
-    let description: String
-    let image: String
-    let likes: Int
-    let views: Int
+public struct Post {
+    public  let author: String
+    public let description: String
+    public let image: String
+    public let likes: Int
+    public let views: Int
     
-  static func posts() -> [Post] {
+    public static func posts() -> [Post] {
         var array = [Post]()
         array.append(Post(author: "Джерри", description: "Мы с томом очень весело проводим время", image: "Джерри с Томом", likes: 20, views: 24))
         array.append(Post(author: "Утёнок", description: "Улетаю отдохнуть, друзья. Скоро вернусь!", image: "Утёнок", likes: 230, views: 470))
