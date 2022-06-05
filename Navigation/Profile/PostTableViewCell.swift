@@ -66,12 +66,12 @@ class PostTableViewCell: UITableViewCell {
     private func layout() {
         [image, likesLabel, descriptionLabel, authorLabel, viewsLabel].forEach {contentView.addSubview($0)
         }
-        let standartConst: CGFloat = 16
+        let standartConstraint: CGFloat = 16
       
         NSLayoutConstraint.activate([
-            authorLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: standartConst),
-            authorLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: standartConst),
-            authorLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -standartConst),
+            authorLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: standartConstraint),
+            authorLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: standartConstraint),
+            authorLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -standartConstraint),
             
             image.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 12),
             image.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -79,18 +79,18 @@ class PostTableViewCell: UITableViewCell {
             image.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             image.heightAnchor.constraint(equalTo: image.widthAnchor),
             
-            descriptionLabel.topAnchor.constraint(equalTo: image.bottomAnchor, constant: standartConst),
-            descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: standartConst),
-            descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -standartConst),
+            descriptionLabel.topAnchor.constraint(equalTo: image.bottomAnchor, constant: standartConstraint),
+            descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: standartConstraint),
+            descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -standartConstraint),
             
-            likesLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: standartConst),
-            likesLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: standartConst),
+            likesLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: standartConstraint),
+            likesLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: standartConstraint),
             likesLabel.trailingAnchor.constraint(equalTo: viewsLabel.leadingAnchor),
             
-            viewsLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: standartConst),
+            viewsLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: standartConstraint),
             viewsLabel.centerXAnchor.constraint(equalTo: likesLabel.centerXAnchor),
-            viewsLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -standartConst),
-            viewsLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -standartConst),
+            viewsLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -standartConstraint),
+            viewsLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -standartConstraint),
             viewsLabel.widthAnchor.constraint(equalTo: likesLabel.widthAnchor)
         ])
     }
