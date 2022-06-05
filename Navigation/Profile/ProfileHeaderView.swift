@@ -122,37 +122,45 @@ class ProfileHeaderView: UIView {
     }
     
     private func setupConstraints() {
+        avatarImage.snp.makeConstraints { make in
+            make.width.height.equalTo(100)
+            make.leading.equalToSuperview().inset(constraint)
+            make.top.equalToSuperview().inset(constraint)
+        }
         
-        NSLayoutConstraint.activate([
-            avatarImage.topAnchor.constraint(equalTo: topAnchor, constant: constraint),
-            avatarImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: constraint),
-            avatarImage.widthAnchor.constraint(equalToConstant: 100),
-            avatarImage.heightAnchor.constraint(equalToConstant: 100),
-            
-            nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 27),
-            nameLabel.leadingAnchor.constraint(equalTo: avatarImage.trailingAnchor, constant: constraint),
-            nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -constraint),
-            
-            statusLabel.bottomAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: -constraint),
-            statusLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
-            statusLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -constraint),
-            
-            statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: constraint/2),
-            statusTextField.heightAnchor.constraint(equalToConstant: 40),
-            statusTextField.leadingAnchor.constraint(equalTo: statusLabel.leadingAnchor),
-            statusTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -constraint),
-            
-            showStatusButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: constraint),
-            showStatusButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -constraint),
-            showStatusButton.heightAnchor.constraint(equalToConstant: 40),
-            showStatusButton.topAnchor.constraint(equalTo: avatarImage.bottomAnchor, constant: 40),
-            showStatusButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -constraint),
-            
-            closeButton.topAnchor.constraint(equalTo: topAnchor, constant: constraint),
-            closeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -constraint),
-            closeButton.heightAnchor.constraint(equalToConstant: 20),
-            closeButton.widthAnchor.constraint(equalToConstant: 20)
-        ])
+        nameLabel.snp.makeConstraints { make in
+            make.top.equalTo(27)
+            make.leading.equalTo(avatarImage.snp_trailingMargin).inset(-constraint)
+            make.trailing.equalToSuperview().inset(constraint)
+        }
+        
+        statusLabel.snp.makeConstraints { make in
+            make.bottom.equalTo(avatarImage.snp_bottomMargin).inset(constraint)
+            make.leading.equalTo(nameLabel)
+            make.trailing.equalToSuperview().inset(constraint)
+        }
+        
+        statusTextField.snp.makeConstraints { make in
+            make.top.equalTo(statusLabel.snp_bottomMargin).inset(-constraint)
+            make.height.equalTo(40)
+            make.leading.equalTo(statusLabel)
+            make.trailing.equalToSuperview().inset(constraint)
+       }
+        
+        showStatusButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(constraint)
+            make.trailing.equalToSuperview().inset(constraint)
+            make.height.equalTo(40)
+            make.top.equalTo(avatarImage.snp_bottomMargin).inset(-40)
+            make.bottom.equalToSuperview().inset(constraint)
+        }
+        
+        closeButton.snp.makeConstraints { make in
+            make.height.width.equalTo(20)
+            make.top.equalToSuperview().inset(constraint)
+            make.trailing.equalToSuperview().inset(constraint)
+        }
+      
         centerAvatar = avatarImage.center
         
     }
