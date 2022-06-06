@@ -13,7 +13,6 @@ class FeedViewController: UIViewController {
     private let stackView: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.backgroundColor = .systemPink
         stack.distribution = .fillEqually
         stack.axis = .vertical
         stack.spacing = 10
@@ -64,7 +63,7 @@ class FeedViewController: UIViewController {
         NSLayoutConstraint.activate([
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stackView.heightAnchor.constraint(equalToConstant: 100),
+            stackView.heightAnchor.constraint(equalToConstant: 110),
             stackView.widthAnchor.constraint(equalToConstant: 200),
             
             firstButton.heightAnchor.constraint(equalToConstant: 50),

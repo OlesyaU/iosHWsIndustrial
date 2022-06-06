@@ -22,7 +22,6 @@ class ProfileHeaderView: UIView {
         image.clipsToBounds = true
         image.layer.borderWidth = 3
         image.layer.borderColor = CGColor(red: 255, green: 255, blue: 255, alpha: 1)
-        image.translatesAutoresizingMaskIntoConstraints = false
         image.layer.cornerRadius = image.bounds.height/2
         image.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapToAvatar))
@@ -42,7 +41,6 @@ class ProfileHeaderView: UIView {
     
     private lazy var closeButton: UIButton = {
         let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.setBackgroundImage(UIImage(named: "close"), for: .normal)
         button.clipsToBounds = true
         button.alpha = 0
@@ -59,7 +57,6 @@ class ProfileHeaderView: UIView {
         label.textAlignment = .left
         label.text = "Кот Томас"
         label.numberOfLines = 1
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -70,13 +67,11 @@ class ProfileHeaderView: UIView {
         label.textAlignment = .left
         label.text = "Тут будет статус"
         label.numberOfLines = 1
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var statusTextField: UITextField = {
         let textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .white
         textField.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 0.5)
         textField.clipsToBounds = true
@@ -96,7 +91,6 @@ class ProfileHeaderView: UIView {
     
     private lazy var showStatusButton: UIButton = {
         let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.backgroundColor = .systemBlue
         button.layer.cornerRadius = 4
         button.setTitle("Show status", for: .normal)
@@ -145,7 +139,7 @@ class ProfileHeaderView: UIView {
             make.height.equalTo(40)
             make.leading.equalTo(statusLabel)
             make.trailing.equalToSuperview().inset(constraint)
-       }
+        }
         
         showStatusButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(constraint)
@@ -160,9 +154,8 @@ class ProfileHeaderView: UIView {
             make.top.equalToSuperview().inset(constraint)
             make.trailing.equalToSuperview().inset(constraint)
         }
-      
-        centerAvatar = avatarImage.center
         
+        centerAvatar = avatarImage.center
     }
     
     @objc private func showStatusButtonTapped() {
