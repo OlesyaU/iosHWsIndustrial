@@ -10,15 +10,15 @@ import StorageService
 
 class PostTableViewCell: UITableViewCell {
     
-  private let image: UIImageView = {
+    private let image: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.contentMode = .scaleAspectFit
         image.backgroundColor = .black
         return image
     }()
-
-  private let authorLabel: UILabel = {
+    
+    private let authorLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 2
@@ -27,7 +27,7 @@ class PostTableViewCell: UITableViewCell {
         return label
     }()
     
-   private let descriptionLabel: UILabel = {
+    private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
@@ -45,7 +45,7 @@ class PostTableViewCell: UITableViewCell {
         return label
     }()
     
-   private let viewsLabel: UILabel = {
+    private let viewsLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 1
@@ -57,18 +57,18 @@ class PostTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-      layout()
-        }
+        layout()
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-     }
+    }
     
     private func layout() {
         [image, likesLabel, descriptionLabel, authorLabel, viewsLabel].forEach {contentView.addSubview($0)
         }
         let standartConstraint: CGFloat = 16
-      
+        
         NSLayoutConstraint.activate([
             authorLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: standartConstraint),
             authorLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: standartConstraint),
@@ -96,8 +96,8 @@ class PostTableViewCell: UITableViewCell {
         ])
     }
     
- func configure(post: Post) {
-        image.image = UIImage(named: post.image )
+    func configure(post: Post) {
+        image.image = UIImage(named: post.image)
         authorLabel.text = post.author
         descriptionLabel.text = post.description
         likesLabel.text = "Likes: \(String(describing: post.likes))"
