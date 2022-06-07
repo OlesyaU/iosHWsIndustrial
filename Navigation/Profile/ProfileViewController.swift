@@ -7,10 +7,12 @@
 
 import UIKit
 import StorageService
+import iOSIntPackage
 
 class ProfileViewController: UIViewController {
     
     private let posts =  Post.posts()
+    private let filter = ImageProcessor()
     
     private lazy var tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
@@ -60,17 +62,28 @@ extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let post = posts[indexPath.row]
+        
         guard let firstCell = tableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifier, for: indexPath) as?  PhotosTableViewCell else {return UITableViewCell()}
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as? PostTableViewCell else {return UITableViewCell()}
-        cell.configure(post: post)
+//        cell.configure(post: post)
         
         if  indexPath.row == 0 {
             firstCell.configure(photos: Photo.getPhotos())
             return firstCell
         } else {
-            
+            switch indexPath.row {
+              case 1:
+                    filter.processImage(sourceImage: UIImage(named: post.image) ?? UIImage(), filter: .colorInvert) { _ in cell.configure(post: post) }
+                case 2:
+                    filter.processImage(sourceImage: UIImage(named: post.image) ?? UIImage(), filter: .noir) { _ in   cell.configure(post: post) }
+                case 3:
+                    filter.processImage(sourceImage: UIImage(named: post.image) ?? UIImage(), filter: .chrome) { _ in   cell.configure(post: post) }
+                default:
+                    print("its default case from ProfileVC with index \(indexPath.row)")
+            }
             return cell
         }
+       
     }
 }
 

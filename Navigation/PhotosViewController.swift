@@ -49,8 +49,7 @@ extension PhotosViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCollectionViewCell.identifier, for: indexPath) as? PhotosCollectionViewCell else {return UICollectionViewCell()}
         let photo = photos[indexPath.item]
         cell.configure(photo: photo)
-      
-        return cell
+       return cell
     }
     }
 
