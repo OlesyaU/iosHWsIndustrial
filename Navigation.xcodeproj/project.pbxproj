@@ -141,7 +141,7 @@
 			children = (
 				7607E4C227D9FAB1005D58DF /* AppDelegate.swift */,
 				7607E4C427D9FAB1005D58DF /* SceneDelegate.swift */,
-				76CF874027DF42C10010F427 /* FeedViewController.swift */,
+				76EA95F3285642C400A9B5F8 /* Feed */,
 				76D5373D280B43AE00A5578B /* Photos */,
 				76D53739280B22B700A5578B /* Photo.swift */,
 				76D53737280B038F00A5578B /* PhotosViewController.swift */,
@@ -183,6 +183,14 @@
 			children = (
 			);
 			path = Photos;
+			sourceTree = "<group>";
+		};
+		76EA95F3285642C400A9B5F8 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				76CF874027DF42C10010F427 /* FeedViewController.swift */,
+			);
+			path = Feed;
 			sourceTree = "<group>";
 		};
 		CF55D9094CBAD730002C309F /* Pods */ = {
