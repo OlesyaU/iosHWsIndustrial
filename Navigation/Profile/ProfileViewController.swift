@@ -9,10 +9,17 @@ import UIKit
 import StorageService
 import iOSIntPackage
 
+protocol UserService {
+    func getUser(name: String) -> User
+}
+
+
 class ProfileViewController: UIViewController {
     
     private let posts =  Post.posts()
     private let filter = ImageProcessor()
+    private let user: UserService
+    private var nameFromLogin = LogInViewController().getName()
     
     private lazy var tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
@@ -24,6 +31,20 @@ class ProfileViewController: UIViewController {
         table.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifier)
         return table
     }()
+    
+    init(user: UserService, name: String) {
+#if DEBUG
+        self.user = TestUserService()
+#else
+        self.user = CurrentUserService()
+#endif
+        self.nameFromLogin = name
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +78,7 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return posts.count 
+        return posts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -65,14 +86,14 @@ extension ProfileViewController: UITableViewDataSource {
         
         guard let firstCell = tableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifier, for: indexPath) as?  PhotosTableViewCell else {return UITableViewCell()}
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as? PostTableViewCell else {return UITableViewCell()}
-//        cell.configure(post: post)
+        //        cell.configure(post: post)
         
         if  indexPath.row == 0 {
             firstCell.configure(photos: Photo.getPhotos())
             return firstCell
         } else {
             switch indexPath.row {
-              case 1:
+                case 1:
                     filter.processImage(sourceImage: UIImage(named: post.image) ?? UIImage(), filter: .colorInvert) { _ in cell.configure(post: post) }
                 case 2:
                     filter.processImage(sourceImage: UIImage(named: post.image) ?? UIImage(), filter: .noir) { _ in   cell.configure(post: post) }
@@ -83,14 +104,14 @@ extension ProfileViewController: UITableViewDataSource {
             }
             return cell
         }
-       
     }
 }
 
 extension ProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        ProfileHeaderView()
+        let header = ProfileHeaderView()
+        header.configure(user: user.getUser(name: nameFromLogin))
+        return header
     }
-    
 }

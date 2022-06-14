@@ -115,6 +115,12 @@ class ProfileHeaderView: UIView {
         super.init(coder: coder)
     }
     
+    func configure(user: User) {
+        nameLabel.text = user.fullName
+        statusLabel.text = user.status
+        avatarImage.image = user.avatar
+    }
+    
     private func setupConstraints() {
         avatarImage.snp.makeConstraints { make in
             make.width.height.equalTo(100)
