@@ -19,7 +19,7 @@ class ProfileViewController: UIViewController {
     private let posts =  Post.posts()
     private let filter = ImageProcessor()
     private let user: UserService
-    private var nameFromLogin = LogInViewController().getName()
+    private var nameFromLogin: String
     
     private lazy var tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
