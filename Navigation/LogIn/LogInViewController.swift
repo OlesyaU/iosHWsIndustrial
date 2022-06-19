@@ -10,6 +10,7 @@ import UIKit
 class LogInViewController: UIViewController {
     
     private let nc = NotificationCenter.default
+    private var user = CurrentUserService()
     
     private let scrollView: UIScrollView =  {
         let scroll = UIScrollView()
@@ -93,6 +94,7 @@ class LogInViewController: UIViewController {
         return button
     }()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -109,6 +111,10 @@ class LogInViewController: UIViewController {
         super.viewWillDisappear(animated)
         nc.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         nc.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    func getName() -> String {
+        nameTextField.text ?? "Имя из текстфилда"
     }
     
     private func layout() {
@@ -156,7 +162,10 @@ class LogInViewController: UIViewController {
     }
     
     @objc private func logInButtonTapped(_ sender: UIButton) {
-        navigationController?.pushViewController(ProfileViewController(), animated: true)
+        let nameUser = getName()
+        
+        navigationController?.pushViewController(ProfileViewController(user: user, name: nameUser ), animated: true)
+        
         switch sender.state {
             case .normal:
                 sender.alpha = 1
