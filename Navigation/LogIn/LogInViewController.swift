@@ -173,12 +173,11 @@ class LogInViewController: UIViewController {
     @objc private func logInButtonTapped(_ sender: UIButton) {
         let nameUser = getName()
         let passUser = getPassword()
-       
         
         if  ((delegate?.checkLogData(login: nameUser, password: passUser)) != nil) {
-        navigationController?.pushViewController(ProfileViewController(user: user, name: nameUser ), animated: true)
+            navigationController?.pushViewController(ProfileViewController(user: user, name: nameUser ), animated: true)
         } else {
-            print("Incorrect data : login or password")
+            print("Incorrect data : login or password. Correct login : Вжик, correct paasword: Вжик")
         }
         
         switch sender.state {
@@ -192,7 +191,6 @@ class LogInViewController: UIViewController {
                 sender.alpha = 0.8
             default:
                 break
-                
         }
     }
     

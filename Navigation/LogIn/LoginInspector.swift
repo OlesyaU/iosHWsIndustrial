@@ -13,6 +13,5 @@ class LoginInspector: LogInViewControllerDelegate {
     
     func checkLogData(login: String, password: String) -> Bool{
       return  checker.checkLogData(login: login , password: password) 
-        
     }
 }
