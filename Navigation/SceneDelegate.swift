@@ -13,17 +13,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private let tabBar = UITabBarController()
     private let factory = MyLoginFactory()
-    private let feedVC = UINavigationController(rootViewController: FeedViewController())
-    private lazy var loginInspector = factory.getLoginInspector()
-    private lazy var profileVC = UINavigationController(rootViewController: factory.loginVC)
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        setupInitialFlow()
+        
+        setupInitialFlow(with: factory)
         setupNavigationBarAppearance()
         setupTabBarAppearance()
-        
-        factory.loginVC.delegate = loginInspector
+
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = tabBar
         window?.makeKeyAndVisible()
@@ -40,9 +37,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         UITabBar.appearance().backgroundColor = .secondarySystemBackground
     }
     
-    private func setupInitialFlow(){
+    private func setupInitialFlow(with: MyLoginFactory) {
+        let feedVC = UINavigationController(rootViewController: FeedViewController())
+        let profileVC = UINavigationController(rootViewController: factory.loginViewController())
         feedVC.tabBarItem.image = .init(systemName: "rectangle.on.rectangle")
-        profileVC.tabBarItem.image = UIImage(systemName: "person")
+        profileVC.tabBarItem.image = .init(systemName: "person")
         
         profileVC.tabBarItem.title = "Profile"
         tabBar.viewControllers = [feedVC, profileVC]

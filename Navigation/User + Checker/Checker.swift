@@ -14,13 +14,6 @@ final class Checker {
     private init () {}
     
     func checkLogData(login: String, password: String) -> Bool {
-        if login == loginVC, password == passwordVC {
-            print("Из чекера - прошел проверку")
-            return true
-        } else {
-            print("Из чекера -  не прошел проверку")
-            return false
-        }
+        login == loginVC && password == passwordVC
     }
-    
 }

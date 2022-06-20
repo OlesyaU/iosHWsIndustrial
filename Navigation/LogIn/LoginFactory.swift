@@ -9,14 +9,15 @@ import Foundation
 import UIKit
 
 protocol LoginFactoryProtocol {
-    func getLoginInspector() -> LoginInspector
+    var loginInspector: LoginInspector { get }
+    func loginViewController() -> LogInViewController
 }
 
 final class MyLoginFactory: LoginFactoryProtocol {
-    
-    let loginVC = LogInViewController()
-    let loginDelegate = LoginInspector()
-    func getLoginInspector() -> LoginInspector {
-        return loginDelegate
+    var loginInspector = LoginInspector()
+    func loginViewController() -> LogInViewController {
+        let loginViewController = LogInViewController()
+        loginViewController.delegate = self.loginInspector
+        return loginViewController
     }
 }
