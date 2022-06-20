@@ -10,6 +10,8 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
+    private let del = LoginInspector()
+    private let loginVC = LogInViewController()
     private let profileVC = UINavigationController(rootViewController: LogInViewController())
     private let feedVC = UINavigationController(rootViewController: FeedViewController())
     private let tabBar = UITabBarController()
@@ -21,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         setupInitialFlow()
         setupNavigationBarAppearance()
         setupTabBarAppearance()
-        
+        loginVC.delegate = del
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = tabBar
         window?.makeKeyAndVisible()

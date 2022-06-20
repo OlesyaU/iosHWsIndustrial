@@ -31,6 +31,8 @@
 		76EA95F72856486800A9B5F8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EA95F62856486800A9B5F8 /* User.swift */; };
 		76EA95FB28564AAB00A9B5F8 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EA95FA28564AAB00A9B5F8 /* UserService.swift */; };
 		76EA96282858DAF400A9B5F8 /* TestUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EA96272858DAF400A9B5F8 /* TestUserService.swift */; };
+		76EA962A285F738E00A9B5F8 /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EA9629285F738E00A9B5F8 /* Checker.swift */; };
+		76EA962C285F783C00A9B5F8 /* LoginInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EA962B285F783C00A9B5F8 /* LoginInspector.swift */; };
 		76EB4AFD27F6EE9400107A11 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EB4AFC27F6EE9400107A11 /* LogInViewController.swift */; };
 		EEB9573C173C95DA1A212F2C /* Pods_StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A50757CBDC4CF6E7319D38A2 /* Pods_StorageService.framework */; };
 /* End PBXBuildFile section */
@@ -90,6 +92,8 @@
 		76EA95F62856486800A9B5F8 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		76EA95FA28564AAB00A9B5F8 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		76EA96272858DAF400A9B5F8 /* TestUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUserService.swift; sourceTree = "<group>"; };
+		76EA9629285F738E00A9B5F8 /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
+		76EA962B285F783C00A9B5F8 /* LoginInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInspector.swift; sourceTree = "<group>"; };
 		76EB4AFC27F6EE9400107A11 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		8C6C08F63EA39F1108C22C25 /* Pods-StorageService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StorageService.release.xcconfig"; path = "Target Support Files/Pods-StorageService/Pods-StorageService.release.xcconfig"; sourceTree = "<group>"; };
 		A33FFDDD3A7E77799CA314DF /* Pods-StorageService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StorageService.debug.xcconfig"; path = "Target Support Files/Pods-StorageService/Pods-StorageService.debug.xcconfig"; sourceTree = "<group>"; };
@@ -229,6 +233,8 @@
 			isa = PBXGroup;
 			children = (
 				76EA95F62856486800A9B5F8 /* User.swift */,
+				76EA9629285F738E00A9B5F8 /* Checker.swift */,
+				76EA962B285F783C00A9B5F8 /* LoginInspector.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -446,8 +452,10 @@
 				7607E4C327D9FAB1005D58DF /* AppDelegate.swift in Sources */,
 				76CF874127DF42C10010F427 /* FeedViewController.swift in Sources */,
 				76EB4AFD27F6EE9400107A11 /* LogInViewController.swift in Sources */,
+				76EA962C285F783C00A9B5F8 /* LoginInspector.swift in Sources */,
 				76CF874327DF42D00010F427 /* ProfileViewController.swift in Sources */,
 				76D5373A280B22B700A5578B /* Photo.swift in Sources */,
+				76EA962A285F738E00A9B5F8 /* Checker.swift in Sources */,
 				76CF876D27E0D4D90010F427 /* InfoViewController.swift in Sources */,
 				76EA95F72856486800A9B5F8 /* User.swift in Sources */,
 				7607E4C527D9FAB1005D58DF /* SceneDelegate.swift in Sources */,
