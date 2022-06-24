@@ -7,10 +7,16 @@
 
 import UIKit
 
+protocol LogInViewControllerDelegate: AnyObject {
+    func checkLogData(login: String, password: String) -> Bool
+}
+
+
 class LogInViewController: UIViewController {
     
     private let nc = NotificationCenter.default
     private var user = CurrentUserService()
+    weak var delegate: LogInViewControllerDelegate?
     
     private let scrollView: UIScrollView =  {
         let scroll = UIScrollView()
@@ -116,6 +122,9 @@ class LogInViewController: UIViewController {
     func getName() -> String {
         nameTextField.text ?? "Имя из текстфилда"
     }
+    func getPassword() -> String {
+        passwordTextField.text ?? "Пароль из текстфилда"
+    }
     
     private func layout() {
         view.addSubview(scrollView)
@@ -163,8 +172,13 @@ class LogInViewController: UIViewController {
     
     @objc private func logInButtonTapped(_ sender: UIButton) {
         let nameUser = getName()
+        let passUser = getPassword()
         
-        navigationController?.pushViewController(ProfileViewController(user: user, name: nameUser ), animated: true)
+        if  ((delegate?.checkLogData(login: nameUser, password: passUser)) != nil) {
+            navigationController?.pushViewController(ProfileViewController(user: user, name: nameUser ), animated: true)
+        } else {
+            print("Incorrect data : login or password. Correct login : Вжик, correct paasword: Вжик")
+        }
         
         switch sender.state {
             case .normal:
@@ -177,7 +191,6 @@ class LogInViewController: UIViewController {
                 sender.alpha = 0.8
             default:
                 break
-                
         }
     }
     
