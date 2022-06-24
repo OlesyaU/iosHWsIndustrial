@@ -12,7 +12,7 @@ class PhotosViewController: UIViewController {
     
     private let photos = Photo.getPhotos()
     private let constraint: CGFloat = 8
- 
+    
     private lazy var collection: UICollectionView =  {
         let layout = UICollectionViewFlowLayout()
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -30,7 +30,14 @@ class PhotosViewController: UIViewController {
         navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
         layout()
         imagePublisherFacade.subscribe(self)
+        receive(images: photos)
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        imagePublisherFacade.rechargeImageLibrary()
+        imagePublisherFacade.removeSubscription(for: self)
+    }
+    
     private func layout(){
         view.addSubview(collection)
         NSLayoutConstraint.activate([
@@ -51,15 +58,15 @@ extension PhotosViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCollectionViewCell.identifier, for: indexPath) as? PhotosCollectionViewCell else {return UICollectionViewCell()}
         let photo = photos[indexPath.item]
         cell.configure(photo: photo)
-       return cell
+        return cell
     }
-    }
+}
 
 //MARK: - UICollectionViewDelegateFlowLayout
 extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (collectionView.bounds.width - constraint * 4)/3
-       return CGSize(width: width, height: width)
+        return CGSize(width: width, height: width)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: constraint, left: constraint, bottom: constraint, right: constraint)
@@ -74,15 +81,13 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
 
 extension PhotosViewController: ImageLibrarySubscriber {
     
-     private var imagePublisherFacade: ImagePublisherFacade {
+    private var imagePublisherFacade: ImagePublisherFacade {
         let publisher = ImagePublisherFacade()
         return publisher
     }
     
-    
     func receive(images: [UIImage]) {
+        imagePublisherFacade.addImagesWithTimer(time: .infinity, repeat: 10, userImages: images)
         print(#function)
     }
-    
-    
 }
