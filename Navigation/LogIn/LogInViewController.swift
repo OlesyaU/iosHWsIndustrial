@@ -112,6 +112,8 @@ class LogInViewController: UIViewController {
         super.viewWillAppear(animated)
         nc.addObserver(self, selector: #selector(keyboardShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         nc.addObserver(self, selector: #selector(keyboardHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        nameTextField.text = ""
+        passwordTextField.text = ""
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
