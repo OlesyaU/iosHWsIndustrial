@@ -12,7 +12,7 @@ class PhotosViewController: UIViewController {
     
     private let photos = Photo.getPhotos()
     private let constraint: CGFloat = 8
-    
+ 
     private lazy var collection: UICollectionView =  {
         let layout = UICollectionViewFlowLayout()
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -29,6 +29,7 @@ class PhotosViewController: UIViewController {
         title = "Photo Gallery"
         navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
         layout()
+        imagePublisherFacade.subscribe(self)
     }
     private func layout(){
         view.addSubview(collection)
@@ -73,8 +74,14 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
 
 extension PhotosViewController: ImageLibrarySubscriber {
     
+     private var imagePublisherFacade: ImagePublisherFacade {
+        let publisher = ImagePublisherFacade()
+        return publisher
+    }
+    
+    
     func receive(images: [UIImage]) {
-      
+        print(#function)
     }
     
     
