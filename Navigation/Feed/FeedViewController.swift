@@ -20,24 +20,17 @@ class FeedViewController: UIViewController {
         
     }()
     
-    private lazy var firstButton: UIButton = {
-        let button = UIButton()
-        button.layer.cornerRadius = 10
-        button.backgroundColor = .white
-        button.setTitle("First", for: .normal)
-        button.setTitleColor(.systemBlue, for: .normal)
+    
+    private lazy var firstButton: CustomButton = {
+        let button = CustomButton(title: "First", background: .red, titleColor: .white)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(buttonPush(_:)), for: .touchUpInside)
         return button
     }()
     
-    private lazy var secondButton: UIButton = {
-        let button = UIButton()
-        button.layer.cornerRadius = 10
-        button.backgroundColor = .black
-        button.setTitle("Second", for: .normal)
-        button.setTitleColor(.systemYellow, for: .normal)
+    private lazy var secondButton: CustomButton = {
+        let button = CustomButton(title: "Second", background: .black, titleColor: .yellow)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(buttonPush(_:)), for: .touchUpInside)

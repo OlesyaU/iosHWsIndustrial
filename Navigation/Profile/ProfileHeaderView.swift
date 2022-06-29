@@ -89,12 +89,8 @@ class ProfileHeaderView: UIView {
         return textField
     } ()
     
-    private lazy var showStatusButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 4
-        button.setTitle("Show status", for: .normal)
-        button.tintColor = .white
+    private lazy var showStatusButton: CustomButton = {
+        let button = CustomButton(title: "Show status", background: .systemBlue, titleColor: .white)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         button.layer.shadowOffset = CGSize(width: 4, height: 4)
         button.layer.shadowColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)

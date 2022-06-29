@@ -88,14 +88,11 @@ class LogInViewController: UIViewController {
         return textField
     } ()
     
-    private lazy var logInButton: UIButton = {
-        let button = UIButton()
+    private lazy var logInButton: CustomButton = {
+        let button = CustomButton(title: "Log In", background: .blue, titleColor: .white)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setBackgroundImage(UIImage(named:"blue_pixel"), for: .normal)
-        button.layer.cornerRadius = 10
         button.clipsToBounds = true
-        button.setTitle("Log In", for: .normal)
-        button.tintColor = .white
         button.addTarget(self, action: #selector(logInButtonTapped(_:)), for: .touchUpInside)
         return button
     }()
