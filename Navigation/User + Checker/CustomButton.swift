@@ -9,6 +9,12 @@ import UIKit
 
 final class CustomButton: UIButton {
     
+    var buttonPressed: (() -> Void)?
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+   
     required init(title: String, background: UIColor, titleColor: UIColor) {
         super.init(frame: .zero)
         setUpButton(title: title, background: background, titleColor: titleColor)
@@ -23,6 +29,11 @@ final class CustomButton: UIButton {
         setTitleColor(titleColor, for: .normal)
         backgroundColor = background
         layer.cornerRadius = 10
+        addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     }
     
+    @objc private func buttonTapped(){
+       buttonTapped()
+        print("customButton method buttonTapped is work from")
+    }
 }

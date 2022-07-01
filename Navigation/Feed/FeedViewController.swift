@@ -22,7 +22,7 @@ class FeedViewController: UIViewController {
     
     
     private lazy var firstButton: CustomButton = {
-        let button = CustomButton(title: "First", background: .red, titleColor: .white)
+        let button = CustomButton(title: "First", background: .yellow, titleColor: .black)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(buttonPush(_:)), for: .touchUpInside)
