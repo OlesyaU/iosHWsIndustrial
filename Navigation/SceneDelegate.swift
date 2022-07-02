@@ -13,14 +13,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private let tabBar = UITabBarController()
     private let factory = MyLoginFactory()
+    private let feedModel = FeedModel()
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        setupInitialFlow(with: factory)
+        setupInitialFlow(with: factory, feedModel: feedModel)
         setupNavigationBarAppearance()
         setupTabBarAppearance()
-
+        
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = tabBar
         window?.makeKeyAndVisible()
@@ -37,10 +38,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         UITabBar.appearance().backgroundColor = .secondarySystemBackground
     }
     
-    private func setupInitialFlow(with: MyLoginFactory) {
-        let feedVC = UINavigationController(rootViewController: FeedViewController())
+    private func setupInitialFlow(with: MyLoginFactory, feedModel: FeedModel) {
+        let vc = FeedViewController(model: feedModel)
+        vc.model = feedModel
+        let feedVC = UINavigationController(rootViewController: vc)
         let profileVC = UINavigationController(rootViewController: factory.loginViewController())
-        feedVC.tabBarItem.image = .init(systemName: "rectangle.on.rectangle")
+        feedVC.tabBarItem.image = UIImage(systemName: "rectangle.on.rectangle")
         profileVC.tabBarItem.image = .init(systemName: "person")
         
         profileVC.tabBarItem.title = "Profile"

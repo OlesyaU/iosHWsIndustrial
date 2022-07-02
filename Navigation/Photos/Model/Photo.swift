@@ -10,7 +10,7 @@ import UIKit
 struct Photo {
     let photo: UIImage!
     
-   @discardableResult static func getPhotos() -> [UIImage] {
+   static func getPhotos() -> [UIImage] {
         let array2: [String] = ["шрек", "рио", "рапунцель", "скрудж и крабс", "газ","гном", "джин", "дональд", "дятел Вудди", "кенга", "король лев", "лев Алекс", "львенок", "микки",  "мини", "монстры", "плуто", "птахиРио", "пятачок",  "винни и все", "вжик", "русалочка", "гаечка", "тимон", "чип", "бэмби" ]
       
         var arrayPhoto = [UIImage]()

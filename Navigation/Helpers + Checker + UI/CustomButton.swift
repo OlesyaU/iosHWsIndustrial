@@ -34,6 +34,5 @@ final class CustomButton: UIButton {
     
     @objc private func buttonTapped(){
         buttonPressed?()
-        print("customButton method buttonTapped is work from")
     }
 }

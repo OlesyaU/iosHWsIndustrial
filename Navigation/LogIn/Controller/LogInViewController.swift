@@ -17,7 +17,7 @@ class LogInViewController: UIViewController {
     private let nc = NotificationCenter.default
     private var user = CurrentUserService()
     weak var delegate: LogInViewControllerDelegate?
-    private var buttonClass = CustomButton()
+    private let buttonClass = CustomButton()
     
     private let scrollView: UIScrollView =  {
         let scroll = UIScrollView()
@@ -33,7 +33,6 @@ class LogInViewController: UIViewController {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
-        
     }()
     
     private let stackView: UIStackView = {
@@ -47,8 +46,7 @@ class LogInViewController: UIViewController {
         stack.clipsToBounds = true
         stack.axis = .vertical
         return stack
-        
-    }()
+   }()
     
     private let logo: UIImageView = {
         let logo = UIImageView()
@@ -71,7 +69,7 @@ class LogInViewController: UIViewController {
         textField.delegate = self
         textField.autocorrectionType = .no
         return textField
-    } ()
+    }()
     
     private lazy var passwordTextField: UITextField = {
         let textField = UITextField()
@@ -87,10 +85,10 @@ class LogInViewController: UIViewController {
         textField.delegate = self
         textField.autocorrectionType = .no
         return textField
-    } ()
+    }()
     
     private lazy var logInButton: CustomButton = {
-        let button = CustomButton(title: "Log In", background: .blue, titleColor: .white)
+        let button = CustomButton(title: "Log In", background: .white, titleColor: .white)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setBackgroundImage(UIImage(named:"blue_pixel"), for: .normal)
         button.clipsToBounds = true
@@ -104,7 +102,7 @@ class LogInViewController: UIViewController {
         view.backgroundColor = .white
         navigationController?.navigationBar.isHidden = true
         layout()
-        butTap()
+        buttonTapped()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -171,10 +169,9 @@ class LogInViewController: UIViewController {
         ])
     }
     
-    private func butTap() {
+    private func buttonTapped() {
         buttonClass.buttonPressed = { [weak self] in
-            guard let self = self else { print("self = nil")
-                return }
+            guard let self = self else { return }
             self.logInButtonTapped(self.buttonClass)
         }
     }
@@ -187,6 +184,7 @@ class LogInViewController: UIViewController {
         } else {
             print("Incorrect data : login or password. Correct login : Вжик, correct paasword: Вжик")
         }
+        
         switch sender.state {
             case .normal:
                 sender.alpha = 1
