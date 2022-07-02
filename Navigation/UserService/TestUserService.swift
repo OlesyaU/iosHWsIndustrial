@@ -12,7 +12,7 @@ final class TestUserService: UserService {
     
     var user = User(fullName: "Вжик", avatar: UIImage(named: "вжик") ?? UIImage(), status: "Всем привет, я Вжик!")
     
-    func getUser(name: String) -> User {
+    func getUser(name: String) -> User? {
         return ( name == user.fullName ? user : User(fullName: name, avatar: UIImage(), status: "Такого пользователя нет"))
     }
 }

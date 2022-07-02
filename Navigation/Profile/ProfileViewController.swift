@@ -10,7 +10,7 @@ import StorageService
 import iOSIntPackage
 
 protocol UserService {
-    func getUser(name: String) -> User
+    func getUser(name: String) -> User?
 }
 
 
@@ -18,7 +18,7 @@ class ProfileViewController: UIViewController {
     
     private let posts =  Post.posts()
     private let filter = ImageProcessor()
-    private let user: UserService
+    private let user: UserService?
     private var nameFromLogin: String
     
     private lazy var tableView: UITableView = {
@@ -111,7 +111,8 @@ extension ProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = ProfileHeaderView()
-        header.configure(user: user.getUser(name: nameFromLogin))
+        guard let user = user?.getUser(name: nameFromLogin) else { return nil}
+        header.configure(user: user)
         return header
     }
 }

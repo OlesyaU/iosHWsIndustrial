@@ -17,7 +17,7 @@ class LogInViewController: UIViewController {
     private let nc = NotificationCenter.default
     private var user = CurrentUserService()
     weak var delegate: LogInViewControllerDelegate?
-    private lazy var buttonClass = CustomButton()
+    private var buttonClass = CustomButton()
     
     private let scrollView: UIScrollView =  {
         let scroll = UIScrollView()
@@ -104,6 +104,7 @@ class LogInViewController: UIViewController {
         view.backgroundColor = .white
         navigationController?.navigationBar.isHidden = true
         layout()
+        butTap()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -170,34 +171,34 @@ class LogInViewController: UIViewController {
         ])
     }
     
+    private func butTap() {
+        buttonClass.buttonPressed = { [weak self] in
+            guard let self = self else { print("self = nil")
+                return }
+            self.logInButtonTapped(self.buttonClass)
+        }
+    }
+    
     @objc private func logInButtonTapped(_ sender: UIButton) {
         let nameUser = getName()
         let passUser = getPassword()
-        
-//      доделать метод и задание и скинуть на проверку
-             
-        buttonClass.buttonPressed = { [weak self] in
-      
-            if ((delegate?.checkLogData(login: nameUser, password: passUser)) != nil) {
-                navigationController?.pushViewController(ProfileViewController(user: user, name: nameUser ), animated: true)
-            } else {
-                print("Incorrect data : login or password. Correct login : Вжик, correct paasword: Вжик")
-            }
-            
-            switch sender.state {
-                case .normal:
-                    sender.alpha = 1
-                case .selected:
-                    sender.alpha = 0.8
-                case .highlighted:
-                    sender.alpha = 0.8
-                case .disabled:
-                    sender.alpha = 0.8
-                default:
-                    break
-            }
+        if ((delegate?.checkLogData(login: nameUser, password: passUser)) != nil) {
+            navigationController?.pushViewController(ProfileViewController(user: user, name: nameUser ), animated: true)
+        } else {
+            print("Incorrect data : login or password. Correct login : Вжик, correct paasword: Вжик")
         }
-        
+        switch sender.state {
+            case .normal:
+                sender.alpha = 1
+            case .selected:
+                sender.alpha = 0.8
+            case .highlighted:
+                sender.alpha = 0.8
+            case .disabled:
+                sender.alpha = 0.8
+            default:
+                break
+        }
     }
     
     @objc private func keyboardShow(notification: NSNotification) {
