@@ -39,9 +39,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func setupInitialFlow(with: MyLoginFactory, feedModel: FeedModel) {
-        let vc = FeedViewController(model: feedModel)
-        vc.model = feedModel
-        let feedVC = UINavigationController(rootViewController: vc)
+
+        let feedVC = UINavigationController(rootViewController: FeedViewController(model: feedModel))
         let profileVC = UINavigationController(rootViewController: factory.loginViewController())
         feedVC.tabBarItem.image = UIImage(systemName: "rectangle.on.rectangle")
         profileVC.tabBarItem.image = .init(systemName: "person")

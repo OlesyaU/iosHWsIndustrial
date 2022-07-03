@@ -38,6 +38,7 @@ class FeedViewController: UIViewController {
     private lazy var textField: CustomTextField = {
         let textField = CustomTextField(borderStyle: .roundedRect, clearButton: .whileEditing, color: .systemBlue)
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.autocorrectionType = .no
         return textField
     }()
     
@@ -77,7 +78,6 @@ class FeedViewController: UIViewController {
     @objc private func buttonPush(_ sender: UIButton) {
         //        navigationController?.pushViewController(PostViewController(), animated: true)
         guard let word = textField.text else {return}
-        
         var result: Bool
         
         if word != "" {
