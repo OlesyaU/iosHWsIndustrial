@@ -89,7 +89,11 @@ class FeedViewController: UIViewController {
             } else {
                 label.textColor = .red
             }
+        } else {
+            
+            label.text = ""
         }
+        textField.resignFirstResponder()
     }
     
     private func stackViewLayout() {

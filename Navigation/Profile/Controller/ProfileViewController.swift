@@ -82,26 +82,32 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let post = posts[indexPath.row]
+        var post = posts[indexPath.row]
         
         guard let firstCell = tableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifier, for: indexPath) as?  PhotosTableViewCell else {return UITableViewCell()}
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as? PostTableViewCell else {return UITableViewCell()}
-        //        cell.configure(post: post)
-        
+
         if  indexPath.row == 0 {
             firstCell.configure(photos: Photo.getPhotos())
             return firstCell
         } else {
+            var originImage = UIImage(named: post.image)
             switch indexPath.row {
                 case 1:
-                    filter.processImage(sourceImage: UIImage(named: post.image) ?? UIImage(), filter: .colorInvert) { _ in cell.configure(post: post) }
+                    filter.processImage(sourceImage: originImage!, filter: .colorInvert) { filtered in originImage = filtered }
                 case 2:
-                    filter.processImage(sourceImage: UIImage(named: post.image) ?? UIImage(), filter: .noir) { _ in   cell.configure(post: post) }
+                    filter.processImage(sourceImage: originImage!, filter: .noir) { filtered in
+                        originImage = filtered
+//                        cell.configure(post: post)
+                   }
                 case 3:
-                    filter.processImage(sourceImage: UIImage(named: post.image) ?? UIImage(), filter: .chrome) { _ in   cell.configure(post: post) }
+                    filter.processImage(sourceImage: originImage!, filter: .chrome) { filtered in   originImage =  filtered }
+//                    cell.configure(post: post)
                 default:
                     print("its default case from ProfileVC with index \(indexPath.row)")
             }
+        
+            cell.configure(post: post)
             return cell
         }
     }

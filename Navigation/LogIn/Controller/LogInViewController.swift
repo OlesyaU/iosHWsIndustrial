@@ -197,7 +197,7 @@ class LogInViewController: UIViewController {
             default:
                 break
         }
-    }
+  }
     
     @objc private func keyboardShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
