@@ -9,7 +9,7 @@ import UIKit
 
 final class FeedCoordinator {
     
-    func feedWay (navController: UINavigationController?, coordinator: FeedCoordinator, result: Bool){
+    func feedFlow(navController: UINavigationController?, coordinator: FeedCoordinator, result: Bool) {
         let postVC = PostViewController()
         
         if result {
@@ -20,4 +20,5 @@ final class FeedCoordinator {
         }
     }
 }
+
 //тут я специально сделала в методе ветвление, на случай если будут разные сценарии в зависимости от того, ввел ли корректно юзер данные или нет.Красный экран - нет, розовый- в случае правильного ввода пароля (слово - Password)

@@ -18,6 +18,8 @@ class LogInViewController: UIViewController {
     private var user = CurrentUserService()
     weak var delegate: LogInViewControllerDelegate?
     private let buttonClass = CustomButton()
+    private var result: Bool?
+    private let coordinator: ProfileCoordinator
     
     private let scrollView: UIScrollView =  {
         let scroll = UIScrollView()
@@ -96,6 +98,14 @@ class LogInViewController: UIViewController {
         return button
     }()
     
+    init(coordinator: ProfileCoordinator) {
+        self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -179,11 +189,14 @@ class LogInViewController: UIViewController {
     @objc private func logInButtonTapped(_ sender: UIButton) {
         let nameUser = getName()
         let passUser = getPassword()
-        if ((delegate?.checkLogData(login: nameUser, password: passUser)) != nil) {
-            navigationController?.pushViewController(ProfileViewController(user: user, name: nameUser ), animated: true)
-        } else {
-            print("Incorrect data : login or password. Correct login : Вжик, correct paasword: Вжик")
-        }
+        result = delegate?.checkLogData(login: nameUser, password: passUser)
+        print(result)
+        coordinator.profileFlow(navController: navigationController ?? UINavigationController(), coordinator: coordinator, result: result!)
+//        if ((delegate?.checkLogData(login: nameUser, password: passUser)) != nil) {
+//            navigationController?.pushViewController(ProfileViewController(user: user, name: nameUser ), animated: true)
+//        } else {
+//            print("Incorrect data : login or password. Correct login : Вжик, correct paasword: Вжик")
+//        }
         
         switch sender.state {
             case .normal:

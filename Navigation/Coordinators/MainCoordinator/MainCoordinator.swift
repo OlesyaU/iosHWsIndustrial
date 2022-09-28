@@ -12,9 +12,8 @@ protocol MainCoordinator {
 }
 
 final class MainCoordinatorImpl: MainCoordinator {
+    
     func startApplication() -> UIViewController {
         return MainTabBarController()
-        
-    }
-    
+   }
 }

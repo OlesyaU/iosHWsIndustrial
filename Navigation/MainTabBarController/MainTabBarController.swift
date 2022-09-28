@@ -10,7 +10,7 @@ import UIKit
 class MainTabBarController: UITabBarController {
     private let factory = MyLoginFactory()
     private let feedModel = FeedModel()
-private let feedCoord = FeedCoordinator()
+    private let feedCoordinator = FeedCoordinator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +19,7 @@ private let feedCoord = FeedCoordinator()
     }
     
     private func setControllers() {
-        let feedVC = UINavigationController(rootViewController: FeedViewController(model: feedModel, coordinator: feedCoord)
+        let feedVC = UINavigationController(rootViewController: FeedViewController(model: feedModel, coordinator: feedCoordinator)
         )
         let profileVC = UINavigationController(rootViewController: factory.loginViewController())
         feedVC.tabBarItem.image = UIImage(systemName: "rectangle.on.rectangle")

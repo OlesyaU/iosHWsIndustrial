@@ -94,7 +94,7 @@ class FeedViewController: UIViewController {
             label.text = ""
         }
         textField.resignFirstResponder()
-        coordinator.feedWay(navController: navigationController, coordinator: coordinator, result: result!)
+        coordinator.feedFlow(navController: navigationController, coordinator: coordinator, result: result!)
     }
     
     private func stackViewLayout() {
