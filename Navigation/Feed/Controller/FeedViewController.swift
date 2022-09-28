@@ -15,6 +15,8 @@ protocol FeedModelProtocol: AnyObject {
 class FeedViewController: UIViewController {
     
     weak var model: FeedModelProtocol?
+    private var result: Bool?
+    private let coordinator: FeedCoordinator
     
     private let stackView: UIStackView = {
         let stack = UIStackView()
@@ -23,8 +25,7 @@ class FeedViewController: UIViewController {
         stack.axis = .vertical
         stack.spacing = 10
         return stack
-        
-    }()
+   }()
     
     private lazy var label: UILabel = {
         let label = UILabel(frame: CGRect(x: 100, y: 100, width: 200, height: 50))
@@ -50,9 +51,10 @@ class FeedViewController: UIViewController {
         return button
     }()
     
-    init(model: FeedModelProtocol){
-        super.init(nibName: nil, bundle: nil)
+    init(model: FeedModelProtocol, coordinator: FeedCoordinator){
         self.model = model
+        self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -67,33 +69,32 @@ class FeedViewController: UIViewController {
         view.addSubview(stackView)
         view.addSubview(label)
         stackViewLayout()
-        
-    }
+   }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         textField.text = ""
+        label.text = ""
     }
     
+    
     @objc private func buttonPush(_ sender: UIButton) {
-        //        navigationController?.pushViewController(PostViewController(), animated: true)
         guard let word = textField.text else {return}
-        var result: Bool
         
         if word != "" {
             result =  model!.check(word: word)
             label.text = word
             
-            if result {
+            if result! {
                 label.textColor = .systemGreen
             } else {
                 label.textColor = .red
             }
         } else {
-            
             label.text = ""
         }
         textField.resignFirstResponder()
+        coordinator.feedWay(navController: navigationController, coordinator: coordinator, result: result!)
     }
     
     private func stackViewLayout() {

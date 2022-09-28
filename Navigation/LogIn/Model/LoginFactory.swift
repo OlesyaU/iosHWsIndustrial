@@ -15,6 +15,7 @@ protocol LoginFactoryProtocol {
 
 final class MyLoginFactory: LoginFactoryProtocol {
     var loginInspector = LoginInspector()
+    
     func loginViewController() -> LogInViewController {
         let loginViewController = LogInViewController()
         loginViewController.delegate = self.loginInspector
