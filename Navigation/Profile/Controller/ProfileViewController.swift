@@ -19,7 +19,8 @@ class ProfileViewController: UIViewController {
     private let posts =  Post.posts()
     private let filter = ImageProcessor()
     private let user: UserService?
-    private var nameFromLogin: String
+    private var nameFromLogin: String?
+    var coordinator: Coordinator?
     
     private lazy var tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
@@ -31,14 +32,14 @@ class ProfileViewController: UIViewController {
         table.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifier)
         return table
     }()
-    
-    init(user: UserService, name: String) {
+
+    init(user: UserService) {
 #if DEBUG
         self.user = TestUserService()
 #else
         self.user = CurrentUserService()
 #endif
-        self.nameFromLogin = name
+//        self.nameFromLogin = name
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -82,7 +83,7 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var post = posts[indexPath.row]
+       let post = posts[indexPath.row]
         
         guard let firstCell = tableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifier, for: indexPath) as?  PhotosTableViewCell else {return UITableViewCell()}
         guard let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as? PostTableViewCell else {return UITableViewCell()}
@@ -116,8 +117,9 @@ extension ProfileViewController: UITableViewDataSource {
 extension ProfileViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let name = nameFromLogin else {return nil}
         let header = ProfileHeaderView()
-        guard let user = user?.getUser(name: nameFromLogin) else { return nil}
+        guard let user = user?.getUser(name: name) else { return nil}
         header.configure(user: user)
         return header
     }

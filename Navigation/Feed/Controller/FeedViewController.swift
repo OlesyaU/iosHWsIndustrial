@@ -16,7 +16,7 @@ class FeedViewController: UIViewController {
     
     weak var model: FeedModelProtocol?
     private var result: Bool?
-    private let coordinator: FeedCoordinator
+    weak var coordinator: FeedCoordinator?
     
     private let stackView: UIStackView = {
         let stack = UIStackView()
@@ -25,7 +25,7 @@ class FeedViewController: UIViewController {
         stack.axis = .vertical
         stack.spacing = 10
         return stack
-   }()
+    }()
     
     private lazy var label: UILabel = {
         let label = UILabel(frame: CGRect(x: 100, y: 100, width: 200, height: 50))
@@ -51,11 +51,10 @@ class FeedViewController: UIViewController {
         return button
     }()
     
-    init(model: FeedModelProtocol, coordinator: FeedCoordinator){
+    init(model: FeedModelProtocol){
         self.model = model
-        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
-    }
+}
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -69,7 +68,7 @@ class FeedViewController: UIViewController {
         view.addSubview(stackView)
         view.addSubview(label)
         stackViewLayout()
-   }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -81,24 +80,29 @@ class FeedViewController: UIViewController {
     @objc private func buttonPush(_ sender: UIButton) {
         guard let word = textField.text else {return}
         
+        let alert = UIAlertController(title: "TextField free", message: "You didn't write something. Change this please to continue", preferredStyle: .alert)
+        let act = UIAlertAction(title: "Ok", style: .cancel)
+        
         if word != "" {
-            result =  model!.check(word: word)
+            result =  model?.check(word: word)
             label.text = word
-            
-            if result! {
+            print(result)
+            if result == true {
                 label.textColor = .systemGreen
             } else {
                 label.textColor = .red
             }
         } else {
+            alert.addAction(act)
+            self.present(alert, animated: true)
             label.text = ""
         }
+        
         textField.resignFirstResponder()
-        coordinator.feedFlow(navController: navigationController, coordinator: coordinator, result: result!)
-    }
+
+        }
     
     private func stackViewLayout() {
-        
         [textField, secondButton].forEach{ stackView.addArrangedSubview($0)}
         
         NSLayoutConstraint.activate([

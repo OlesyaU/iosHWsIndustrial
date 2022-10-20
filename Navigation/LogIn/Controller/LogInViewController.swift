@@ -19,7 +19,7 @@ class LogInViewController: UIViewController {
     weak var delegate: LogInViewControllerDelegate?
     private let buttonClass = CustomButton()
     private var result: Bool?
-    private let coordinator: ProfileCoordinator
+    var coordinator: Coordinator?
     
     private let scrollView: UIScrollView =  {
         let scroll = UIScrollView()
@@ -98,15 +98,15 @@ class LogInViewController: UIViewController {
         return button
     }()
     
-    init(coordinator: ProfileCoordinator) {
-        self.coordinator = coordinator
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+//    init() {
+//        self.coordinator = ProfileCoordinator()
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -190,8 +190,19 @@ class LogInViewController: UIViewController {
         let nameUser = getName()
         let passUser = getPassword()
         result = delegate?.checkLogData(login: nameUser, password: passUser)
-        print(result)
-        coordinator.profileFlow(navController: navigationController ?? UINavigationController(), coordinator: coordinator, result: result!)
+        print(result == nil)
+//        guard var coordinator = coordinator else {
+//            return
+//        }
+//        coordinator = ProfileCoordinator()
+        print(coordinator)
+       
+//        coordinator.profileFlow(navController: navigationController ?? UINavigationController(), coordinator: coordinator, result: result!)
+
+    coordinator?.setUp()
+//        coordinator?.login = result ?? false
+        print(coordinator)
+       
 //        if ((delegate?.checkLogData(login: nameUser, password: passUser)) != nil) {
 //            navigationController?.pushViewController(ProfileViewController(user: user, name: nameUser ), animated: true)
 //        } else {

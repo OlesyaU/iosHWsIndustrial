@@ -17,8 +17,8 @@ final class MyLoginFactory: LoginFactoryProtocol {
     var loginInspector = LoginInspector()
     
     func loginViewController() -> LogInViewController {
-        let profileCoordinator = ProfileCoordinator()
-        let loginViewController = LogInViewController(coordinator: profileCoordinator)
+//        let profileCoordinator: Coordinator = ProfileCoordinator()
+        let loginViewController = LogInViewController()
         loginViewController.delegate = self.loginInspector
         return loginViewController
     }
