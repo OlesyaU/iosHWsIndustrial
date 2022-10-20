@@ -19,7 +19,7 @@ class LogInViewController: UIViewController {
     weak var delegate: LogInViewControllerDelegate?
     private let buttonClass = CustomButton()
     private var result: Bool?
-    var coordinator: Coordinator?
+   weak var coordinator: Coordinator?
     
     private let scrollView: UIScrollView =  {
         let scroll = UIScrollView()

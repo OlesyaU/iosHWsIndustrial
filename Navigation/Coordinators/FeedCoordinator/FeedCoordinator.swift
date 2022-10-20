@@ -12,18 +12,18 @@ final class FeedCoordinator: Coordinator {
     
     var children: [Coordinator] = []
     
-    init(navigationController: UIViewController) {
-        self.controller = UINavigationController()
+    init(controller: UIViewController) {
+        self.controller = controller
     }
     
     
     func setUp() {
         let postVC = PostViewController()
         let wrongVC = WrongViewController()
-        let feedModel = FeedModel()
+//        let feedModel = FeedModel()
 //        let feedCoordinator = FeedCoordinator()
-        let feedVC = FeedViewController(model: feedModel)
-        feedVC.tabBarItem.image = UIImage(systemName: "rectangle.on.rectangle")
+//        let feedVC = FeedViewController(model: feedModel)
+//        feedVC.tabBarItem.image = UIImage(systemName: "rectangle.on.rectangle")
         
 //        if result {
 //            navController?.pushViewController(postVC, animated: true)

@@ -29,7 +29,8 @@ final class MainCoordinator: Coordinator {
             profileVC.tabBarItem.image = .init(systemName: "person")
             profileVC.tabBarItem.title = "Profile"
             vc.viewControllers = [feedVC, profileVC]
-            
+            print(feedModel)
+
             let nvc = controller as! UINavigationController
             nvc.pushViewController(vc, animated: false)
         }

@@ -14,7 +14,7 @@ protocol FeedModelProtocol: AnyObject {
 
 class FeedViewController: UIViewController {
     
-    weak var model: FeedModelProtocol?
+    private let model: FeedModelProtocol?
     private var result: Bool?
     weak var coordinator: FeedCoordinator?
     
@@ -54,6 +54,7 @@ class FeedViewController: UIViewController {
     init(model: FeedModelProtocol){
         self.model = model
         super.init(nibName: nil, bundle: nil)
+        print(model)
 }
     
     required init?(coder: NSCoder) {
@@ -79,14 +80,14 @@ class FeedViewController: UIViewController {
     
     @objc private func buttonPush(_ sender: UIButton) {
         guard let word = textField.text else {return}
-        
+    
         let alert = UIAlertController(title: "TextField free", message: "You didn't write something. Change this please to continue", preferredStyle: .alert)
         let act = UIAlertAction(title: "Ok", style: .cancel)
         
         if word != "" {
             result =  model?.check(word: word)
             label.text = word
-            print(result)
+            
             if result == true {
                 label.textColor = .systemGreen
             } else {
