@@ -55,7 +55,7 @@ class FeedViewController: UIViewController {
         self.model = model
         super.init(nibName: nil, bundle: nil)
         print(model)
-}
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -80,7 +80,7 @@ class FeedViewController: UIViewController {
     
     @objc private func buttonPush(_ sender: UIButton) {
         guard let word = textField.text else {return}
-    
+        
         let alert = UIAlertController(title: "TextField free", message: "You didn't write something. Change this please to continue", preferredStyle: .alert)
         let act = UIAlertAction(title: "Ok", style: .cancel)
         
@@ -100,8 +100,18 @@ class FeedViewController: UIViewController {
         }
         
         textField.resignFirstResponder()
-
+//        coordinator?.result = result!
+        coordinator?.check = { [weak self]  in
+            (self?.result)!
+            
         }
+        print(coordinator?.check)
+        coordinator?.setUp()
+        
+ 
+
+        print(result)
+    }
     
     private func stackViewLayout() {
         [textField, secondButton].forEach{ stackView.addArrangedSubview($0)}
