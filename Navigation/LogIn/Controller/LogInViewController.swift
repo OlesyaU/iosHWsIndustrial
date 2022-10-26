@@ -19,7 +19,7 @@ class LogInViewController: UIViewController {
     weak var delegate: LogInViewControllerDelegate?
     private let buttonClass = CustomButton()
     private var result: Bool?
-   weak var coordinator: Coordinator?
+    var coordinator: ProfileCoordinator?
     
     private let scrollView: UIScrollView =  {
         let scroll = UIScrollView()
@@ -181,7 +181,7 @@ class LogInViewController: UIViewController {
         let nameUser = getName()
         let passUser = getPassword()
         result = delegate?.checkLogData(login: nameUser, password: passUser)
-        print(result == nil)
+        print(result )
 //        guard var coordinator = coordinator else {
 //            return
 //        }

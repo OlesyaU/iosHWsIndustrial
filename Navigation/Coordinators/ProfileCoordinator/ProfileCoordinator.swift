@@ -28,7 +28,6 @@ final class ProfileCoordinator: Coordinator {
     
     init() {
         children = []
-//        login = false
         // create login service
         let factory = MyLoginFactory()
     loginVC = factory.loginViewController()
@@ -40,24 +39,23 @@ final class ProfileCoordinator: Coordinator {
         profileNC.tabBarItem = UITabBarItem(title: "Profile",
                                             image: UIImage(systemName: "person.crop.circle"),
                                             selectedImage: UIImage(systemName: "person.crop.circle.fill"))
+   
         controller = profileNC
 //       setUp()
     }
     
     func setUp() {
-        loginVC.coordinator = self
-//        let name = loginVC.getName()
      let uSer = TestUserService()
         guard let login = login else {
-//            print("login = nil")
+
             return}
         if login  {
             present(.profile(uSer.user))
-            print(#function,#line)
+      
             
         } else {
             present(.photos)
-            print(#function,#line)
+     
         }
    }
     
@@ -81,7 +79,7 @@ final class ProfileCoordinator: Coordinator {
             case let .profile(user):
                 let profileVC = ProfileViewController(user: user
                                                       as! UserService)
-               profileVC.coordinator = self
+    
 //                profileNC.setViewControllers([profileVC], animated: true)
 //                profileNC.pushViewController(profileVC, animated: true)
                profileNC.pushViewController(profileVC, animated: true)

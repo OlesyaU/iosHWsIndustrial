@@ -14,7 +14,6 @@ final class MainCoordinator: Coordinator {
     
     init(controller: UIViewController){
         self.controller = controller
-        feedFlowStart()
     }
     
     func setUp() {
@@ -25,23 +24,18 @@ final class MainCoordinator: Coordinator {
             let factory = MyLoginFactory()
             let feedModel = FeedModel()
             let feedVC =  FeedViewController(model: feedModel)
-//            feedVC.coordinator = FeedCoordinator(controller: controller)
-//            вот тут не ясно где указывать координатора у этого контроллера
-            let profileVC =  factory.loginViewController()
+            feedVC.coordinator = FeedCoordinator(controller: controller)
             feedVC.tabBarItem.image = UIImage(systemName: "rectangle.on.rectangle")
+            
+            let profileVC =  factory.loginViewController()
+            profileVC.coordinator = ProfileCoordinator()
             profileVC.tabBarItem.image = .init(systemName: "person")
             profileVC.tabBarItem.title = "Profile"
+            
             vc.viewControllers = [feedVC, profileVC]
-            print(feedModel)
-
+            
             let nvc = controller as! UINavigationController
             nvc.pushViewController(vc, animated: false)
         }
-       
-    }
-    func feedFlowStart() {
-        let child = FeedCoordinator(controller: controller)
-        child.parentCoordinator = self
-        children.append(child)
     }
 }

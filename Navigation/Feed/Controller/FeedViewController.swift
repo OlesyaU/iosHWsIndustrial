@@ -16,7 +16,7 @@ class FeedViewController: UIViewController {
     
     private let model: FeedModelProtocol?
     private var result: Bool?
-    weak var coordinator: FeedCoordinator?
+    var coordinator: FeedCoordinator?
     
     private let stackView: UIStackView = {
         let stack = UIStackView()
@@ -54,7 +54,6 @@ class FeedViewController: UIViewController {
     init(model: FeedModelProtocol){
         self.model = model
         super.init(nibName: nil, bundle: nil)
-        print(model)
     }
     
     required init?(coder: NSCoder) {
@@ -100,18 +99,18 @@ class FeedViewController: UIViewController {
         }
         
         textField.resignFirstResponder()
-//        coordinator?.result = result!
-        coordinator?.check = { [weak self]  in
-            (self?.result)!
-            
+//        coordinator?.check = {
+//            coordinator?.result = result
+//        }()
+        coordinator?.check = { [weak self] in
+            (self?.result!)!
         }
-        print(coordinator?.check)
         coordinator?.setUp()
-        
- 
 
         print(result)
     }
+    
+    
     
     private func stackViewLayout() {
         [textField, secondButton].forEach{ stackView.addArrangedSubview($0)}

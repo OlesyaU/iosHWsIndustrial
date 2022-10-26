@@ -20,7 +20,7 @@ class ProfileViewController: UIViewController {
     private let filter = ImageProcessor()
     private let user: UserService?
     private var nameFromLogin: String?
-    var coordinator: Coordinator?
+    var coordinator: ProfileCoordinator?
     
     private lazy var tableView: UITableView = {
         let table = UITableView(frame: .zero, style: .grouped)
