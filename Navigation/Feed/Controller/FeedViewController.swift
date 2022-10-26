@@ -76,7 +76,6 @@ class FeedViewController: UIViewController {
         label.text = ""
     }
     
-    
     @objc private func buttonPush(_ sender: UIButton) {
         guard let word = textField.text else {return}
         
@@ -99,18 +98,13 @@ class FeedViewController: UIViewController {
         }
         
         textField.resignFirstResponder()
-//        coordinator?.check = {
-//            coordinator?.result = result
-//        }()
+        
         coordinator?.check = { [weak self] in
             (self?.result!)!
         }
+        
         coordinator?.setUp()
-
-        print(result)
     }
-    
-    
     
     private func stackViewLayout() {
         [textField, secondButton].forEach{ stackView.addArrangedSubview($0)}
