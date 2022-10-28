@@ -272,7 +272,6 @@
 			isa = PBXGroup;
 			children = (
 				76FBF7562870AE27003D621F /* Model */,
-				76FBF7572870AE30003D621F /* View */,
 				76FBF7582870AE38003D621F /* Controller */,
 			);
 			path = LogIn;
@@ -370,13 +369,6 @@
 				76EA962B285F783C00A9B5F8 /* LoginInspector.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		76FBF7572870AE30003D621F /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		76FBF7582870AE38003D621F /* Controller */ = {

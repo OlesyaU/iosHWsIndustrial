@@ -15,8 +15,8 @@ protocol LogInViewControllerDelegate: AnyObject {
 class LogInViewController: UIViewController {
     
     private let nc = NotificationCenter.default
-    private var user = CurrentUserService()
-    weak var delegate: LogInViewControllerDelegate?
+    private var user = TestUserService()
+    var delegate: LogInViewControllerDelegate?
     private let buttonClass = CustomButton()
     private var result: Bool?
     var coordinator: ProfileCoordinator?
@@ -104,6 +104,7 @@ class LogInViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         layout()
         buttonTapped()
+        print(delegate)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -180,19 +181,22 @@ class LogInViewController: UIViewController {
     @objc private func logInButtonTapped(_ sender: UIButton) {
         let nameUser = getName()
         let passUser = getPassword()
-        result = delegate?.checkLogData(login: nameUser, password: passUser)
+        result = delegate?.checkLogData(login: nameUser, password: passUser) 
         print(result )
-//        guard var coordinator = coordinator else {
-//            return
-//        }
-//        coordinator = ProfileCoordinator()
+        coordinator?.checkResult = { [weak self] in
+            self!.result!
+        }
+        
+        coordinator?.login = { [weak self] in
+            (self?.getName())!
+        }
+        print(getName())
         print(coordinator)
-       
-//        coordinator.profileFlow(navController: navigationController ?? UINavigationController(), coordinator: coordinator, result: result!)
+
 
     coordinator?.setUp()
-//        coordinator?.login = result ?? false
-        print(coordinator)
+
+      
        
 //        if ((delegate?.checkLogData(login: nameUser, password: passUser)) != nil) {
 //            navigationController?.pushViewController(ProfileViewController(user: user, name: nameUser ), animated: true)

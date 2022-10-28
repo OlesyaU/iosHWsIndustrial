@@ -9,7 +9,7 @@ import UIKit
 import StorageService
 import iOSIntPackage
 
-protocol UserService {
+protocol UserService: AnyObject {
     func getUser(name: String) -> User?
 }
 
