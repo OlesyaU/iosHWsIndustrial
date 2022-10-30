@@ -8,7 +8,11 @@
 import Foundation
 import UIKit
 
-final class User {
+final class User: UserService {
+    func getUser(name: String) -> User? {
+        self
+    }
+// туту я подписала класс юзера на протокол юзер сервис, чтобы удовлетворить в профайлконтроллере условию и чтобы метод возвращал себя
     
     let fullName: String
     let avatar: UIImage

@@ -86,6 +86,10 @@ class FeedViewController: UIViewController {
             result =  model?.check(word: word)
             label.text = word
             
+            coordinator?.check = { [weak self] in
+                (self?.result!)!
+            }
+            
             if result == true {
                 label.textColor = .systemGreen
             } else {
@@ -98,10 +102,6 @@ class FeedViewController: UIViewController {
         }
         
         textField.resignFirstResponder()
-        
-        coordinator?.check = { [weak self] in
-            (self?.result!)!
-        }
         
         coordinator?.setUp()
     }

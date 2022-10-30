@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		215A11CB704C1B3A9F90F237 /* Pods_Navigation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 333D027019CA842A919DB357 /* Pods_Navigation.framework */; };
+		215A11CB704C1B3A9F90F237 /* Pods_Navigation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 333D027019CA842A919DB357 /* Pods_Navigation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		7607E4C327D9FAB1005D58DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7607E4C227D9FAB1005D58DF /* AppDelegate.swift */; };
 		7607E4C527D9FAB1005D58DF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7607E4C427D9FAB1005D58DF /* SceneDelegate.swift */; };
 		7607E4CC27D9FAB3005D58DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7607E4CB27D9FAB3005D58DF /* Assets.xcassets */; };
@@ -15,7 +15,7 @@
 		762C886B2844E19E00AFCC07 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76CF876A27E0D2780010F427 /* Post.swift */; };
 		762C886D2844E23D00AFCC07 /* StorageService.h in Headers */ = {isa = PBXBuildFile; fileRef = 762C88612844E13500AFCC07 /* StorageService.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		766EF06727F49051004F0607 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763B9A0127E9FB8300AE78DD /* ProfileHeaderView.swift */; };
-		7670788728450E6300E66B8F /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762C885F2844E13500AFCC07 /* StorageService.framework */; };
+		7670788728450E6300E66B8F /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 762C885F2844E13500AFCC07 /* StorageService.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		76C31ED628E2F8390057B417 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C31ED528E2F8390057B417 /* MainCoordinator.swift */; };
 		76C31ED928E2F9FF0057B417 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C31ED828E2F9FF0057B417 /* MainTabBarController.swift */; };
 		76C31EDC28E42A0C0057B417 /* FeedCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C31EDB28E42A0C0057B417 /* FeedCoordinator.swift */; };
@@ -38,23 +38,18 @@
 		76EA962A285F738E00A9B5F8 /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EA9629285F738E00A9B5F8 /* Checker.swift */; };
 		76EA962C285F783C00A9B5F8 /* LoginInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EA962B285F783C00A9B5F8 /* LoginInspector.swift */; };
 		76EA962E2860B8CC00A9B5F8 /* LoginFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EA962D2860B8CC00A9B5F8 /* LoginFactory.swift */; };
-		76EA96312865CB0000A9B5F8 /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 76EA96302865CB0000A9B5F8 /* iOSIntPackage */; };
+		76EA96312865CB0000A9B5F8 /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 76EA96302865CB0000A9B5F8 /* iOSIntPackage */; settings = {ATTRIBUTES = (Required, ); }; };
 		76EA96332869D92B00A9B5F8 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EA96322869D92B00A9B5F8 /* CustomButton.swift */; };
 		76EB4AFD27F6EE9400107A11 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EB4AFC27F6EE9400107A11 /* LogInViewController.swift */; };
+		76F008F0290E53DA004C4FCA /* ProfileHeaderView.swift in Headers */ = {isa = PBXBuildFile; fileRef = 763B9A0127E9FB8300AE78DD /* ProfileHeaderView.swift */; };
+		76F008F1290E53FF004C4FCA /* StorageService.h in Headers */ = {isa = PBXBuildFile; fileRef = 762C88612844E13500AFCC07 /* StorageService.h */; };
 		76FBF75D2870B113003D621F /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FBF75C2870B113003D621F /* FeedModel.swift */; };
 		76FBF75F2870B1E1003D621F /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FBF75E2870B1E1003D621F /* CustomTextField.swift */; };
-		EEB9573C173C95DA1A212F2C /* Pods_StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A50757CBDC4CF6E7319D38A2 /* Pods_StorageService.framework */; };
+		EEB9573C173C95DA1A212F2C /* Pods_StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A50757CBDC4CF6E7319D38A2 /* Pods_StorageService.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		762C88632844E13500AFCC07 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7607E4B727D9FAB1005D58DF /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 762C885E2844E13500AFCC07;
-			remoteInfo = StorageService;
-		};
-		76792B712845051D002EC3D6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7607E4B727D9FAB1005D58DF /* Project object */;
 			proxyType = 1;
@@ -426,6 +421,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		76F008EA290DD681004C4FCA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76F008F1290E53FF004C4FCA /* StorageService.h in Headers */,
+				76F008F0290E53DA004C4FCA /* ProfileHeaderView.swift in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -434,6 +438,7 @@
 			buildConfigurationList = 7607E4D327D9FAB3005D58DF /* Build configuration list for PBXNativeTarget "Navigation" */;
 			buildPhases = (
 				F7882C5501A5B882D8EC210A /* [CP] Check Pods Manifest.lock */,
+				76F008EA290DD681004C4FCA /* Headers */,
 				7607E4BB27D9FAB1005D58DF /* Sources */,
 				7607E4BC27D9FAB1005D58DF /* Frameworks */,
 				7607E4BD27D9FAB1005D58DF /* Resources */,
@@ -444,7 +449,6 @@
 			);
 			dependencies = (
 				762C88642844E13500AFCC07 /* PBXTargetDependency */,
-				76792B722845051D002EC3D6 /* PBXTargetDependency */,
 			);
 			name = Navigation;
 			packageProductDependencies = (
@@ -648,11 +652,6 @@
 			isa = PBXTargetDependency;
 			target = 762C885E2844E13500AFCC07 /* StorageService */;
 			targetProxy = 762C88632844E13500AFCC07 /* PBXContainerItemProxy */;
-		};
-		76792B722845051D002EC3D6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 762C885E2844E13500AFCC07 /* StorageService */;
-			targetProxy = 76792B712845051D002EC3D6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

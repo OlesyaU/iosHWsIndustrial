@@ -27,8 +27,8 @@ final class MainCoordinator: Coordinator {
             feedVC.coordinator = FeedCoordinator(controller: controller)
             feedVC.tabBarItem.image = UIImage(systemName: "rectangle.on.rectangle")
             
-            let profileVC =  factory.loginViewController()
-            profileVC.coordinator = ProfileCoordinator()
+            let profileVC = factory.loginViewController()
+            profileVC.coordinator = ProfileCoordinator(controller: controller)
             profileVC.tabBarItem.image = .init(systemName: "person")
             profileVC.tabBarItem.title = "Profile"
             
