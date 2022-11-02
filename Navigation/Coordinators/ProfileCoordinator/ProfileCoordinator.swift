@@ -22,7 +22,6 @@ final class ProfileCoordinator: Coordinator {
     var children: [Coordinator]
     var login: (()->String)?
     var checkResult: (()->Bool)?
-    //    var usFind: (()-> User)?
     
     init(controller: UIViewController) {
         self.controller = controller
@@ -40,7 +39,6 @@ final class ProfileCoordinator: Coordinator {
     
     func setUp() {
         user = service.getUser(name: login!())
-        print(checkResult!())
         guard let user = user else {return}
         if checkResult!() {
             present(.profile(user))
@@ -55,10 +53,12 @@ final class ProfileCoordinator: Coordinator {
             case .profile(let user):
                 let profileVC = ProfileViewController(user: user)
                 profileVC.coordinator = self
+                profileVC.nameFromLogin = {
+                    user.fullName
+                }
                 controller.navigationController?.pushViewController(profileVC, animated: true)
             case .photos:
                 controller.navigationController?.pushViewController(PhotosViewController(), animated: true)
-                //                controller.navigationController?.pushViewController(WrongViewController(), animated: true)
         }
     }
 }

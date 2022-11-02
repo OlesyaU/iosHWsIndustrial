@@ -181,6 +181,12 @@ class LogInViewController: UIViewController {
     @objc private func logInButtonTapped(_ sender: UIButton) {
         let nameUser = getName()
         let passUser = getPassword()
+//        let profileVC = ProfileViewController(user: user.getUser(name: nameUser)!)
+//        profileVC.nameFromLogin = { [weak self] in
+//           nameUser
+//  }
+//      let nbhn =   user.getUser(name: nameUser)
+//        print(nameUser)
         result = delegate?.checkLogData(login: nameUser, password: passUser) 
        coordinator?.checkResult = { [weak self] in
             self!.result!
