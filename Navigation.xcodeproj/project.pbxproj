@@ -43,6 +43,7 @@
 		76EB4AFD27F6EE9400107A11 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76EB4AFC27F6EE9400107A11 /* LogInViewController.swift */; };
 		76F008F0290E53DA004C4FCA /* ProfileHeaderView.swift in Headers */ = {isa = PBXBuildFile; fileRef = 763B9A0127E9FB8300AE78DD /* ProfileHeaderView.swift */; };
 		76F008F1290E53FF004C4FCA /* StorageService.h in Headers */ = {isa = PBXBuildFile; fileRef = 762C88612844E13500AFCC07 /* StorageService.h */; };
+		76F008F329162EEA004C4FCA /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76F008F229162EEA004C4FCA /* FeedViewModel.swift */; };
 		76FBF75D2870B113003D621F /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FBF75C2870B113003D621F /* FeedModel.swift */; };
 		76FBF75F2870B1E1003D621F /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76FBF75E2870B1E1003D621F /* CustomTextField.swift */; };
 		EEB9573C173C95DA1A212F2C /* Pods_StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A50757CBDC4CF6E7319D38A2 /* Pods_StorageService.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -107,6 +108,7 @@
 		76EA962D2860B8CC00A9B5F8 /* LoginFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFactory.swift; sourceTree = "<group>"; };
 		76EA96322869D92B00A9B5F8 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		76EB4AFC27F6EE9400107A11 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		76F008F229162EEA004C4FCA /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		76FBF75C2870B113003D621F /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
 		76FBF75E2870B1E1003D621F /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		8C6C08F63EA39F1108C22C25 /* Pods-StorageService.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StorageService.release.xcconfig"; path = "Target Support Files/Pods-StorageService/Pods-StorageService.release.xcconfig"; sourceTree = "<group>"; };
@@ -257,8 +259,8 @@
 			isa = PBXGroup;
 			children = (
 				76FBF7502870AD72003D621F /* Model */,
-				76FBF7512870AD7D003D621F /* View */,
-				76FBF7522870ADB7003D621F /* Controller */,
+				76FBF7512870AD7D003D621F /* ViewModel */,
+				76FBF7522870ADB7003D621F /* View (Controller) */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -317,19 +319,20 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		76FBF7512870AD7D003D621F /* View */ = {
+		76FBF7512870AD7D003D621F /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				76F008F229162EEA004C4FCA /* FeedViewModel.swift */,
 			);
-			path = View;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		76FBF7522870ADB7003D621F /* Controller */ = {
+		76FBF7522870ADB7003D621F /* View (Controller) */ = {
 			isa = PBXGroup;
 			children = (
 				76CF874027DF42C10010F427 /* FeedViewController.swift */,
 			);
-			path = Controller;
+			path = "View (Controller)";
 			sourceTree = "<group>";
 		};
 		76FBF7532870ADDA003D621F /* Model */ = {
@@ -625,6 +628,7 @@
 				76D0007027F8A00200E9077D /* PostTableViewCell.swift in Sources */,
 				76D5373C280B42DE00A5578B /* PhotosCollectionViewCell.swift in Sources */,
 				76EA962E2860B8CC00A9B5F8 /* LoginFactory.swift in Sources */,
+				76F008F329162EEA004C4FCA /* FeedViewModel.swift in Sources */,
 				76C31EE128E9B4340057B417 /* Coordinator.swift in Sources */,
 				76EA95FB28564AAB00A9B5F8 /* UserService.swift in Sources */,
 				76EA96282858DAF400A9B5F8 /* TestUserService.swift in Sources */,

@@ -21,12 +21,14 @@ final class MainCoordinator: Coordinator {
             let vc = MainTabBarController()
             vc.coordinator = self
             
-            let factory = MyLoginFactory()
             let feedModel = FeedModel()
-            let feedVC =  FeedViewController(model: feedModel)
-            feedVC.coordinator = FeedCoordinator(controller: controller)
+            let feedViewModel = FeedViewModel(model: feedModel)
+            let feedCoordinator = FeedCoordinator(controller: controller)
+            let feedVC =  FeedViewController(viewModel: feedViewModel, coordinator: feedCoordinator)
+            feedVC.coordinator = feedCoordinator
             feedVC.tabBarItem.image = UIImage(systemName: "rectangle.on.rectangle")
             
+            let factory = MyLoginFactory()
             let profileVC = factory.loginViewController()
             profileVC.coordinator = ProfileCoordinator(controller: controller)
             profileVC.tabBarItem.image = .init(systemName: "person")

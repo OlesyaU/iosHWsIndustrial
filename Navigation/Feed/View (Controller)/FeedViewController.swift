@@ -14,9 +14,9 @@ protocol FeedModelProtocol: AnyObject {
 
 class FeedViewController: UIViewController {
     
-    private let model: FeedModelProtocol?
+    private let viewModel: FeedViewModel
     private var result: Bool?
-    var coordinator: FeedCoordinator?
+    var coordinator: FeedCoordinator
     
     private let stackView: UIStackView = {
         let stack = UIStackView()
@@ -51,8 +51,9 @@ class FeedViewController: UIViewController {
         return button
     }()
     
-    init(model: FeedModelProtocol){
-        self.model = model
+    init(viewModel: FeedViewModel, coordinator: FeedCoordinator){
+        self.viewModel = viewModel
+        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -68,29 +69,32 @@ class FeedViewController: UIViewController {
         view.addSubview(stackView)
         view.addSubview(label)
         stackViewLayout()
+        viewModel.changeState(action: .viewIsReady)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        textField.text = ""
-        label.text = ""
-    }
+    //    override func viewWillAppear(_ animated: Bool) {
+    //        super.viewWillAppear(animated)
+    //        textField.text = ""
+    //        label.text = ""
+    //    }
+    //    Я закомментировала данный код, чтобы результат проверки при возврате на этот контроллер было видно.Если надо . могу убрать просто эту проверку и оставить этот код- в таком случае при возврате на этот экран поле ввода и лейбл будут пустыми
+    
     
     @objc private func buttonPush(_ sender: UIButton) {
         guard let word = textField.text else {return}
-        
         let alert = UIAlertController(title: "TextField free", message: "You didn't write something. Change this please to continue", preferredStyle: .alert)
         let act = UIAlertAction(title: "Ok", style: .cancel)
-        
         if word != "" {
-            result =  model?.check(word: word)
-            label.text = word
-            
-            coordinator?.check = { [weak self] in
-                (self?.result!)!
+            viewModel.word = word
+            viewModel.changeState(action: .buttonTapped)
+            result = viewModel.result
+            coordinator.check = { [weak self] in
+                guard let result = self?.result else {return false}
+                return result
             }
             
-            if result == true {
+            label.text = word
+            if result  == true {
                 label.textColor = .systemGreen
             } else {
                 label.textColor = .red
@@ -102,8 +106,7 @@ class FeedViewController: UIViewController {
         }
         
         textField.resignFirstResponder()
-        
-        coordinator?.setUp()
+        coordinator.setUp()
     }
     
     private func stackViewLayout() {
