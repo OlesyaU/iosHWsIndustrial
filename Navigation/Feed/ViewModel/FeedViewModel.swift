@@ -16,7 +16,7 @@ final class FeedViewModel {
         case success
         case error
     }
-
+//тут несколько состояний...я не уверена, можно ли их использовать в координаторе?
     enum Action {
         case viewIsReady
         case buttonTapped
