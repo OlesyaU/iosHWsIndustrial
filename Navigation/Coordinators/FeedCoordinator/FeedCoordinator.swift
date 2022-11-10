@@ -8,7 +8,7 @@
 import UIKit
 
 final class FeedCoordinator: Coordinator {
-    weak var parentCoordinator: MainCoordinator?
+//    weak var parentCoordinator: MainCoordinator?
     var controller: UIViewController
     var children: [Coordinator] = []
     var check: (()-> Bool)?

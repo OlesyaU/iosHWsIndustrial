@@ -48,6 +48,7 @@ final class ProfileCoordinator: Coordinator {
         }
     }
     
+    
     func present(_ presentation: Presentation) {
         switch presentation {
             case .profile(let user):

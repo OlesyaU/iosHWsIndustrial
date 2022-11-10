@@ -12,12 +12,6 @@ final class FeedViewModel {
     let model: FeedModelProtocol
     
     enum State {
-        case initial
-        case success
-        case error
-    }
-//тут несколько состояний...я не уверена, можно ли их использовать в координаторе?
-    enum Action {
         case viewIsReady
         case buttonTapped
     }
@@ -29,16 +23,16 @@ final class FeedViewModel {
         self.model = model
     }
     
-    private(set) var state: State = .initial {
+    private(set) var state: State = .viewIsReady {
         didSet {
             stateChanged?(state)
         }
     }
     
-    func changeState(action: Action) {
+    func changeState(action: State) {
         switch action {
             case .viewIsReady:
-                state = .initial
+                ()
             case .buttonTapped:
            guard let word = word else {return}
                 result = model.check(word: word)
