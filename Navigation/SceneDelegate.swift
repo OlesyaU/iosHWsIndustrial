@@ -10,16 +10,16 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     var window: UIWindow?
-   private var mainCoordinator: MainCoordinator?
+    private var mainCoordinator: MainCoordinator?
     
-   
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
-       let nav = UINavigationController()
+        let nav = UINavigationController()
         mainCoordinator = MainCoordinator(controller: nav)
         mainCoordinator?.setUp()
-       
+        
         setupNavigationBarAppearance()
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = nav
@@ -32,6 +32,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         navigationBarAppearance.backgroundColor = .secondarySystemBackground
         UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
     }
-    
 }
 

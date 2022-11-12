@@ -5,7 +5,6 @@
 //  Created by Олеся on 22.03.2022.
 //
 
-import UIKit
 import SnapKit
 
 class ProfileHeaderView: UIView {
@@ -34,6 +33,7 @@ class ProfileHeaderView: UIView {
         image.translatesAutoresizingMaskIntoConstraints = false
         image.sizeThatFits(UIScreen.main.bounds.size)
         image.backgroundColor = .white
+        image.isUserInteractionEnabled = false
         image.alpha = 0.8
         image.isHidden = true
         return image
@@ -102,8 +102,6 @@ class ProfileHeaderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        [nameLabel, showStatusButton, statusLabel, statusTextField, avatarImage, closeButton ].forEach({addSubview($0)})
-        self.insertSubview(imageAnimation, at: 4)
         setupConstraints()
     }
     
@@ -118,45 +116,49 @@ class ProfileHeaderView: UIView {
     }
     
     private func setupConstraints() {
-        avatarImage.snp.makeConstraints { make in
-            make.width.height.equalTo(100)
-            make.leading.equalToSuperview().inset(constraint)
-            make.top.equalToSuperview().inset(constraint)
-        }
+        [nameLabel, showStatusButton, statusLabel, statusTextField,imageAnimation,  avatarImage, closeButton ].forEach({addSubview($0)})
         
-        nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(27)
-            make.leading.equalTo(avatarImage.snp_trailingMargin).inset(-constraint)
-            make.trailing.equalToSuperview().inset(constraint)
+        avatarImage.snp.makeConstraints { maker in
+            maker.width.height.equalTo(100)
+            maker.leading.equalToSuperview().inset(constraint)
+            maker.top.equalToSuperview().inset(constraint)
         }
-        
-        statusLabel.snp.makeConstraints { make in
-            make.bottom.equalTo(avatarImage.snp_bottomMargin).inset(constraint)
-            make.leading.equalTo(nameLabel)
-            make.trailing.equalToSuperview().inset(constraint)
+
+        nameLabel.snp.makeConstraints { maker in
+            maker.top.equalTo(27)
+            maker.leading.equalTo(avatarImage.snp_trailingMargin).inset(-constraint)
+            maker.trailing.equalToSuperview().inset(constraint)
+           
         }
-        
-        statusTextField.snp.makeConstraints { make in
-            make.top.equalTo(statusLabel.snp_bottomMargin).inset(-constraint)
-            make.height.equalTo(40)
-            make.leading.equalTo(statusLabel)
-            make.trailing.equalToSuperview().inset(constraint)
+
+        statusLabel.snp.makeConstraints { maker in
+            maker.bottom.equalTo(avatarImage.snp_bottomMargin).inset(constraint)
+            maker.leading.equalTo(nameLabel)
+            maker.trailing.equalToSuperview().inset(constraint)
+           
         }
-        
-        showStatusButton.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(constraint)
-            make.trailing.equalToSuperview().inset(constraint)
-            make.height.equalTo(40)
-            make.top.equalTo(avatarImage.snp_bottomMargin).inset(-40)
-            make.bottom.equalToSuperview().inset(constraint)
+
+        statusTextField.snp.makeConstraints { maker in
+            maker.top.equalTo(statusLabel.snp_bottomMargin).inset(-constraint)
+            maker.height.equalTo(40)
+            maker.leading.equalTo(statusLabel)
+            maker.trailing.equalToSuperview().inset(constraint)
         }
-        
-        closeButton.snp.makeConstraints { make in
-            make.height.width.equalTo(20)
-            make.top.equalToSuperview().inset(constraint)
-            make.trailing.equalToSuperview().inset(constraint)
+
+        showStatusButton.snp.makeConstraints { maker in
+            maker.leading.equalToSuperview().inset(constraint)
+            maker.trailing.equalToSuperview().inset(constraint)
+            maker.height.equalTo(40)
+            maker.top.equalTo(avatarImage.snp_bottomMargin).inset(-40)
+            maker.bottom.equalToSuperview().inset(constraint)
         }
-        
+
+        closeButton.snp.makeConstraints { maker in
+            maker.height.width.equalTo(20)
+            maker.top.equalToSuperview().inset(constraint)
+            maker.trailing.equalToSuperview().inset(constraint)
+        }
+
         centerAvatar = avatarImage.center
     }
     
@@ -166,7 +168,7 @@ class ProfileHeaderView: UIView {
         statusTextField.endEditing(true)
         statusTextField.resignFirstResponder()
         statusTextField.text = nil
-        print(" Status Text : \(statusText)")
+        print(" Status Text: \(statusText)")
     }
     
     @objc private func textFieldEditing(_ textfield: UITextField) {

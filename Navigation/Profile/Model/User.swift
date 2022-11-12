@@ -8,7 +8,11 @@
 import Foundation
 import UIKit
 
-final class User {
+final class User: UserService {
+    func getUser(name: String) -> User? {
+        self
+    }
+// тут я подписала класс юзера на протокол юзер сервис, чтобы удовлетворить в профайлконтроллере условию 
     
     let fullName: String
     let avatar: UIImage

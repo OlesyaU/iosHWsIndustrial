@@ -21,6 +21,7 @@ class LogInViewController: UIViewController {
     private var result: Bool?
     var coordinator: ProfileCoordinator?
     
+    
     private let scrollView: UIScrollView =  {
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
@@ -48,7 +49,7 @@ class LogInViewController: UIViewController {
         stack.clipsToBounds = true
         stack.axis = .vertical
         return stack
-   }()
+    }()
     
     private let logo: UIImageView = {
         let logo = UIImageView()
@@ -97,14 +98,13 @@ class LogInViewController: UIViewController {
         button.addTarget(self, action: #selector(logInButtonTapped(_:)), for: .touchUpInside)
         return button
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationController?.navigationBar.isHidden = true
         layout()
         buttonTapped()
-        print(delegate)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -181,28 +181,29 @@ class LogInViewController: UIViewController {
     @objc private func logInButtonTapped(_ sender: UIButton) {
         let nameUser = getName()
         let passUser = getPassword()
-        result = delegate?.checkLogData(login: nameUser, password: passUser) 
-        print(result )
+        
+        //        let profileVC = ProfileViewController(user: user.getUser(name: nameUser)!)
+        //        profileVC.nameFromLogin = { [weak self] in
+        //           nameUser
+        //  }
+        //      let nbhn =   user.getUser(name: nameUser)
+        //        print(nameUser)
+        
+        result = delegate?.checkLogData(login: nameUser, password: passUser)
         coordinator?.checkResult = { [weak self] in
             self!.result!
         }
-        
         coordinator?.login = { [weak self] in
             (self?.getName())!
         }
-        print(getName())
-        print(coordinator)
-
-
-    coordinator?.setUp()
-
-      
-       
-//        if ((delegate?.checkLogData(login: nameUser, password: passUser)) != nil) {
-//            navigationController?.pushViewController(ProfileViewController(user: user, name: nameUser ), animated: true)
-//        } else {
-//            print("Incorrect data : login or password. Correct login : Вжик, correct paasword: Вжик")
-//        }
+        coordinator?.controller = self
+        coordinator?.setUp()
+        
+        //        if ((delegate?.checkLogData(login: nameUser, password: passUser)) != nil) {
+        //            navigationController?.pushViewController(ProfileViewController(user: user, name: nameUser ), animated: true)
+        //        } else {
+        //            print("Incorrect data : login or password. Correct login : Вжик, correct paasword: Вжик")
+        //        }
         
         switch sender.state {
             case .normal:
@@ -216,7 +217,7 @@ class LogInViewController: UIViewController {
             default:
                 break
         }
-  }
+    }
     
     @objc private func keyboardShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {

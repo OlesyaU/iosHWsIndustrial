@@ -21,12 +21,10 @@ final class ProfileCoordinator: Coordinator {
     
     var children: [Coordinator]
     var login: (()->String)?
-    
     var checkResult: (()->Bool)?
     
-    
-    
-    init() {
+    init(controller: UIViewController) {
+        self.controller = controller
         children = []
         
         let factory = MyLoginFactory()
@@ -37,33 +35,32 @@ final class ProfileCoordinator: Coordinator {
         profileNC.tabBarItem = UITabBarItem(title: "Profile",
                                             image: UIImage(systemName: "person.crop.circle"),
                                             selectedImage: UIImage(systemName: "person.crop.circle.fill"))
-        
-        controller = profileNC
     }
     
     func setUp() {
         user = service.getUser(name: login!())
-        print(checkResult!())
         guard let user = user else {return}
-        print(user)
         if checkResult!() {
             present(.profile(user))
         } else {
-            present(.photos)
+            let wrongVC = WrongViewController()
+            controller.navigationController?.pushViewController(wrongVC, animated: true)
         }
-        
     }
+    
     
     func present(_ presentation: Presentation) {
         switch presentation {
             case .profile(let user):
-                let profileVC = ProfileViewController(user:service )
+                let profileVC = ProfileViewController(user: user)
                 profileVC.coordinator = self
-                profileNC.pushViewController(profileVC, animated: true)
+                profileVC.nameFromLogin = {
+                    user.fullName
+                }
+                controller.navigationController?.pushViewController(profileVC, animated: true)
             case .photos:
-                profileNC.pushViewController(PhotosViewController(), animated: true)
+                controller.navigationController?.pushViewController(PhotosViewController(), animated: true)
         }
-        
     }
 }
 

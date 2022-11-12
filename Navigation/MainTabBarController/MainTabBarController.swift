@@ -20,5 +20,4 @@ class MainTabBarController: UITabBarController {
     private func setControllers() {
         coordinator?.setUp()
     }
-    
 }
