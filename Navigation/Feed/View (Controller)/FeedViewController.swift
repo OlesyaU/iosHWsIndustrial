@@ -11,7 +11,7 @@ infix operator ?=
 
 extension String {
     static func ?= (left: String, right: String) -> Bool {
-        let word = right != nil ? left : right
+        let word = left != nil ? left : right
         return left == word
         
     }
@@ -91,8 +91,6 @@ class FeedViewController: UIViewController {
     @objc private func buttonPush(_ sender: UIButton) {
         guard let word = textField.text else {return}
         
-        //        let alert = UIAlertController(title: "TextField free", message: "You didn't write something. Change this please to continue", preferredStyle: .alert)
-        //        let act = UIAlertAction(title: "Ok", style: .cancel)
         if word ?= "" {
             viewModel.word = word
             viewModel.changeState(action: .buttonTapped)
@@ -108,12 +106,9 @@ class FeedViewController: UIViewController {
             } else {
                 label.textColor = .red
             }
-        } else {
-            
-            label.text = ""
         }
         
-        textField.resignFirstResponder()
+       textField.resignFirstResponder()
         coordinator.setUp()
     }
     
