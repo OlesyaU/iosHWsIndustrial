@@ -8,7 +8,7 @@
 import UIKit
 
 final class FeedCoordinator: Coordinator {
-//    weak var parentCoordinator: MainCoordinator?
+    //    weak var parentCoordinator: MainCoordinator?
     var controller: UIViewController
     var children: [Coordinator] = []
     var check: (()-> Bool)?
@@ -20,12 +20,14 @@ final class FeedCoordinator: Coordinator {
     func setUp() {
         if controller is UINavigationController {
             let postVC = PostViewController()
-            let wrongVC = WrongViewController()
             let nvc =  controller as! UINavigationController
             if check!() == true {
                 nvc.pushViewController(postVC, animated: true)
             } else {
-                nvc.pushViewController(wrongVC, animated: true)
+                let alert = UIAlertController(title: "Incorrect or NO data ", message: "You didn't write right password. Change this please to continue. Correct password is \"Password\"" , preferredStyle: .alert)
+                let act = UIAlertAction(title: "Ok", style: .cancel)
+                alert.addAction(act)
+                controller.present(alert, animated: true)
             }
         }
     }

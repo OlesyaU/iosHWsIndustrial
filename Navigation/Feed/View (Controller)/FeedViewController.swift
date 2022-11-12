@@ -7,6 +7,15 @@
 
 import UIKit
 
+infix operator ?=
+
+extension String {
+    static func ?= (left: String, right: String) -> Bool {
+        let word = right != nil ? left : right
+        return left == word
+        
+    }
+}
 
 protocol FeedModelProtocol: AnyObject {
     func check(word: String) -> Bool
@@ -79,12 +88,12 @@ class FeedViewController: UIViewController {
     //    }
     //    Я закомментировала данный код, чтобы результат проверки при возврате на этот контроллер было видно.Если надо . могу убрать просто эту проверку и оставить этот код- в таком случае при возврате на этот экран поле ввода и лейбл будут пустыми
     
-    
     @objc private func buttonPush(_ sender: UIButton) {
         guard let word = textField.text else {return}
-        let alert = UIAlertController(title: "TextField free", message: "You didn't write something. Change this please to continue", preferredStyle: .alert)
-        let act = UIAlertAction(title: "Ok", style: .cancel)
-        if word != "" {
+        
+        //        let alert = UIAlertController(title: "TextField free", message: "You didn't write something. Change this please to continue", preferredStyle: .alert)
+        //        let act = UIAlertAction(title: "Ok", style: .cancel)
+        if word ?= "" {
             viewModel.word = word
             viewModel.changeState(action: .buttonTapped)
             result = viewModel.result
@@ -100,8 +109,7 @@ class FeedViewController: UIViewController {
                 label.textColor = .red
             }
         } else {
-            alert.addAction(act)
-            self.present(alert, animated: true)
+            
             label.text = ""
         }
         
@@ -125,3 +133,4 @@ class FeedViewController: UIViewController {
         ])
     }
 }
+
