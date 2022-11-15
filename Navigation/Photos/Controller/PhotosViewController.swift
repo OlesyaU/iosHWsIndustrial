@@ -12,7 +12,7 @@ class PhotosViewController: UIViewController {
     
     private var photos = Photo.getPhotos()
     private let constraint: CGFloat = 8
-    private let publisher = ImagePublisherFacade()
+//    private let publisher = ImagePublisherFacade()
     
     private lazy var collection: UICollectionView =  {
         let layout = UICollectionViewFlowLayout()
@@ -30,8 +30,8 @@ class PhotosViewController: UIViewController {
         title = "Photo Gallery"
         navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
         layout()
-        publisher.subscribe(self)
-        publisher.addImagesWithTimer(time: 0.5, repeat: photos.count * 2, userImages: photos)
+//        publisher.subscribe(self)
+//        publisher.addImagesWithTimer(time: 0.5, repeat: photos.count * 2, userImages: photos)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,8 +43,8 @@ class PhotosViewController: UIViewController {
         super.viewWillDisappear(animated)
         navigationController?.navigationBar.isHidden = true
         
-        publisher.removeSubscription(for: self)
-        publisher.rechargeImageLibrary()
+//        publisher.removeSubscription(for: self)
+//        publisher.rechargeImageLibrary()
     }
     
     
@@ -89,10 +89,9 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension PhotosViewController: ImageLibrarySubscriber {
-    func receive(images: [UIImage]) {
-        photos = images
-        collection.reloadData()
-        print(#function)
-    }
-}
+//extension PhotosViewController: ImageLibrarySubscriber {
+//    func receive(images: [UIImage]) {
+//        photos = images
+//        collection.reloadData()
+//    }
+//}
