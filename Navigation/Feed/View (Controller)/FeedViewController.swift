@@ -10,11 +10,10 @@ import UIKit
 infix operator ?=
 
 extension String {
-    static func ?= (left: String, right: String) -> Bool {
+    static func ?= (left: String?, right: String) -> Bool {
         let word = left != nil ? left : right
         return left == word
-        
-    }
+   }
 }
 
 protocol FeedModelProtocol: AnyObject {
@@ -44,8 +43,7 @@ class FeedViewController: UIViewController {
         return label
     }()
     
-    
-    private lazy var textField: CustomTextField = {
+   private lazy var textField: CustomTextField = {
         let textField = CustomTextField(borderStyle: .roundedRect, clearButton: .whileEditing, color: .systemBlue)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = .no
