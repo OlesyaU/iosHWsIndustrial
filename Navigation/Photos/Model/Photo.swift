@@ -19,6 +19,9 @@ struct Photo {
         }
         return arrayPhoto
     }
+    static func getDoudlePhotos() -> [UIImage] {
+     getPhotos() + getPhotos()
+    }
 }
 
 
