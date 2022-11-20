@@ -31,7 +31,11 @@ class PhotosViewController: UIViewController {
         title = "Photo Gallery"
         navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
         layout()
+        
         filteringImage()
+        
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,13 +62,13 @@ class PhotosViewController: UIViewController {
 extension PhotosViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         photos.count
-        //        photos2.count
+//                photos2.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCollectionViewCell.identifier, for: indexPath) as? PhotosCollectionViewCell else {return UICollectionViewCell()}
         let photo = photos[indexPath.item]
-        //        let photo = photos2[indexPath.item]
+//                let photo = photos2[indexPath.item]
         cell.configure(photo: photo)
         return cell
     }
@@ -88,21 +92,36 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension PhotosViewController {
+    
     private func filteringImage() {
-        let start = DispatchTime.now()
-        processor.processImagesOnThread(sourceImages: photos, filter: .noir, qos: .userInteractive, completion: { [weak self] images in
+        let start = DispatchTime.now().uptimeNanoseconds
+        processor.processImagesOnThread(sourceImages: photos, filter: .noir, qos:  .default, completion: { [weak self] images in
             self?.photos = images
-//            self?.photos2 = images
+//                        self?.photos2 = images
                 .compactMap{$0}
                 .map{UIImage(cgImage: $0)}
             DispatchQueue.main.async {
+                [weak self] in
                 self?.collection.reloadData()
-                let end = DispatchTime.now()
-                //            let allTime = end.uptimeNanoseconds - start.uptimeNanoseconds
-                let time = end.distance(to: start)
-            
-                print("Время начала - \(start), время окончания - \(end), время на наложение фильтра \(time)")
+               let end = DispatchTime.now().uptimeNanoseconds
+                let allTime = Int(end - start)/1000000000
+                print("Время на наложение фильтра \(allTime) секунд")
             }
         })
     }
 }
+
+// Используем разные приоритеты и стандартный массив картинок:
+//Время на наложение фильтра 9 секунд - sourceImages: photos, filter: .noir, qos: .userInteractive,
+//Время на наложение фильтра 9 секунд - sourceImages: photos, filter: .noir, qos:  .userInitiated,
+//Время на наложение фильтра 9 секунд - sourceImages: photos, filter: .noir, qos: .utility,
+//Время на наложение фильтра 10 секунд - sourceImages: photos, filter: .noir, qos: .background,
+//Время на наложение фильтра 9 секунд - sourceImages: photos, filter: .noir, qos: .default.
+
+// Используем разные приоритеты и удвоенный массив картинок: надо заменить(перекомментировать код) в 4 местах - в параметрах метода наложения фидьтра, в замыкании метода и в методах  cellForRowAt и numberOfItemsInSection
+//Время на наложение фильтра 17 секунд - sourceImages: photos2, filter: .noir, qos: .userInteractive
+//Время на наложение фильтра 17 секунд - sourceImages: photos2, filter: .noir, qos: .userInitiated
+//Время на наложение фильтра 18 секунд - sourceImages: photos2, filter: .noir, qos: .utility
+//Время на наложение фильтра 52 секунд - sourceImages: photos2, filter: .noir, qos: .background (скроллила )
+//Время на наложение фильтра 46 секунд - sourceImages: photos2, filter: .noir, qos: .background ( НЕ СКРОЛЛИЛА)
+//Время на наложение фильтра 17 секунд - sourceImages: photos2, filter: .noir, qos:  .default

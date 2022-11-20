@@ -13,7 +13,6 @@ protocol UserService: AnyObject {
     func getUser(name: String) -> User?
 }
 
-
 class ProfileViewController: UIViewController {
     
     private let posts =  Post.posts()
