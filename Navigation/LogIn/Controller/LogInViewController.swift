@@ -223,14 +223,12 @@ class LogInViewController: UIViewController {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             scrollView.contentInset.bottom = keyboardSize.height
             scrollView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
-            print(#function)
         }
     }
     
     @objc private func keyboardHide(notification: NSNotification) {
         scrollView.contentInset.bottom = .zero
         scrollView.verticalScrollIndicatorInsets = .zero
-        print(#function)
     }
 }
 
@@ -240,3 +238,4 @@ extension LogInViewController: UITextFieldDelegate {
         return true
     }
 }
+
