@@ -36,7 +36,7 @@ class FeedViewController: UIViewController {
     }()
     
     private lazy var label: UILabel = {
-        let label = UILabel(frame: CGRect(x: 100, y: 100, width: 200, height: 50))
+        let label = UILabel(frame: CGRect(x: view.center.x - 100, y: 100, width: 200, height: 50))
         label.backgroundColor = .white
         label.layer.cornerRadius = 10
         label.alpha = 0.5
@@ -50,8 +50,22 @@ class FeedViewController: UIViewController {
         return textField
     }()
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(frame: CGRect(x: view.center.x, y: view.center.y, width: 100, height: 100))
+        indicator.style = .whiteLarge
+        return indicator
+    }()
+    
+    private lazy var brutForceButton: CustomButton = {
+        let button = CustomButton(title: "Подобрать пароль", background: .systemYellow, titleColor: .black)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(bruteButtonPush(_:)), for: .touchUpInside)
+        return button
+    }()
+    
     private lazy var secondButton: CustomButton = {
-        let button = CustomButton(title: "Check", background: .black, titleColor: .yellow)
+        let button = CustomButton(title: "Check", background: .black, titleColor: .systemYellow)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(buttonPush(_:)), for: .touchUpInside)
@@ -77,6 +91,7 @@ class FeedViewController: UIViewController {
         view.addSubview(label)
         stackViewLayout()
         viewModel.changeState(action: .viewIsReady)
+        activityIndicator.isHidden = true
     }
     
     //    override func viewWillAppear(_ animated: Bool) {
@@ -110,16 +125,36 @@ class FeedViewController: UIViewController {
         coordinator.setUp()
     }
     
+   @objc private func bruteButtonPush(_ sender: UIButton) {
+        let brute = BruteForce()
+       activityIndicator.isHidden = false
+       activityIndicator.startAnimating()
+//       let op1 = DispatchWorkItem(block: {
+//           brute.bruteForce(passwordToUnlock: "1P")
+//       })
+//       let op2 = DispatchWorkItem(block: { [weak self] in
+//           self?.activityIndicator.stopAnimating()
+//           self?.activityIndicator.isHidden = true
+//       })
+              DispatchQueue.global().async { [weak self] in
+           brute.bruteForce(passwordToUnlock: "1P")
+       }
+      
+       
+    }
+    
     private func stackViewLayout() {
-        [textField, secondButton].forEach{ stackView.addArrangedSubview($0)}
+        [textField, brutForceButton, secondButton, activityIndicator].forEach{ stackView.addArrangedSubview($0)}
         
         NSLayoutConstraint.activate([
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stackView.heightAnchor.constraint(equalToConstant: 110),
+            stackView.heightAnchor.constraint(equalToConstant: 170),
             stackView.widthAnchor.constraint(equalToConstant: 200),
             
             textField.heightAnchor.constraint(equalToConstant: 50),
+            brutForceButton.heightAnchor.constraint(equalToConstant: 50),
+            brutForceButton.widthAnchor.constraint(equalToConstant: 200),
             secondButton.heightAnchor.constraint(equalToConstant: 50),
             textField.widthAnchor.constraint(equalToConstant: 200),
             secondButton.widthAnchor.constraint(equalToConstant: 200)

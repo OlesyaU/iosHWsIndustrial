@@ -317,6 +317,7 @@
 			isa = PBXGroup;
 			children = (
 				76FBF75C2870B113003D621F /* FeedModel.swift */,
+				76343B1629303A8300599FE0 /* BruteForce.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -367,7 +368,6 @@
 			children = (
 				76EA962D2860B8CC00A9B5F8 /* LoginFactory.swift */,
 				76EA962B285F783C00A9B5F8 /* LoginInspector.swift */,
-				76343B1629303A8300599FE0 /* BruteForce.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
