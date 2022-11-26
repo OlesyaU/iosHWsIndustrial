@@ -13,7 +13,7 @@ extension String {
     static func ?= (left: String?, right: String) -> Bool {
         let word = left != nil ? left : right
         return left == word
-   }
+    }
 }
 
 protocol FeedModelProtocol: AnyObject {
@@ -43,7 +43,7 @@ class FeedViewController: UIViewController {
         return label
     }()
     
-   private lazy var textField: CustomTextField = {
+    private lazy var textField: CustomTextField = {
         let textField = CustomTextField(borderStyle: .roundedRect, clearButton: .whileEditing, color: .systemBlue)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = .no
@@ -121,26 +121,26 @@ class FeedViewController: UIViewController {
             }
         }
         
-       textField.resignFirstResponder()
+        textField.resignFirstResponder()
         coordinator.setUp()
     }
     
-   @objc private func bruteButtonPush(_ sender: UIButton) {
+    @objc private func bruteButtonPush(_ sender: UIButton) {
         let brute = BruteForce()
-       activityIndicator.isHidden = false
-       activityIndicator.startAnimating()
-//       let op1 = DispatchWorkItem(block: {
-//           brute.bruteForce(passwordToUnlock: "1P")
-//       })
-//       let op2 = DispatchWorkItem(block: { [weak self] in
-//           self?.activityIndicator.stopAnimating()
-//           self?.activityIndicator.isHidden = true
-//       })
-              DispatchQueue.global().async { [weak self] in
-           brute.bruteForce(passwordToUnlock: "1P")
-       }
-      
-       
+        let queue = OperationQueue()
+        queue.addBarrierBlock {
+            OperationQueue.main.addOperation {[weak self] in
+                self?.activityIndicator.isHidden = false
+                self?.activityIndicator.startAnimating()
+            }
+            brute.bruteForce(passwordToUnlock: "pas")
+        }
+        queue.addOperation {
+            OperationQueue.main.addOperation { [weak self] in
+                self?.activityIndicator.isHidden = true
+                self?.activityIndicator.stopAnimating()
+            }
+        }
     }
     
     private func stackViewLayout() {
