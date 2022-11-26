@@ -17,6 +17,7 @@ extension String {
 }
 
 protocol FeedModelProtocol: AnyObject {
+    func getpassword() -> String
     func check(word: String) -> Bool
 }
 
@@ -47,6 +48,7 @@ class FeedViewController: UIViewController {
         let textField = CustomTextField(borderStyle: .roundedRect, clearButton: .whileEditing, color: .systemBlue)
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.autocorrectionType = .no
+        textField.isSecureTextEntry = false
         return textField
     }()
     
@@ -120,27 +122,33 @@ class FeedViewController: UIViewController {
                 label.textColor = .red
             }
         }
-        
         textField.resignFirstResponder()
         coordinator.setUp()
     }
     
     @objc private func bruteButtonPush(_ sender: UIButton) {
-        let brute = BruteForce()
+        viewModel.changeState(action: .brutForce)
+        let brute = viewModel.bruteForce
         let queue = OperationQueue()
+        guard let word = viewModel.word else {return}
+        let operation = Operation()
         queue.addBarrierBlock {
             OperationQueue.main.addOperation {[weak self] in
+                self?.viewModel.changeState(action: .brutForce)
                 self?.activityIndicator.isHidden = false
                 self?.activityIndicator.startAnimating()
             }
-            brute.bruteForce(passwordToUnlock: "pas")
+            brute.bruteForce(passwordToUnlock: word)
         }
-        queue.addOperation {
+        
+        operation.completionBlock = {
             OperationQueue.main.addOperation { [weak self] in
                 self?.activityIndicator.isHidden = true
                 self?.activityIndicator.stopAnimating()
+                self?.textField.text = word
             }
         }
+        queue.addOperation(operation)
     }
     
     private func stackViewLayout() {
