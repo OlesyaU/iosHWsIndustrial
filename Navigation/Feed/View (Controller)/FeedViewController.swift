@@ -53,8 +53,8 @@ class FeedViewController: UIViewController {
     }()
     
     private lazy var activityIndicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(frame: CGRect(x: view.center.x, y: view.center.y, width: 100, height: 100))
-        indicator.style = .whiteLarge
+        let indicator = UIActivityIndicatorView(frame: CGRect(x: textField.center.x, y: textField.center.y, width: 50, height: 50))
+        indicator.style = .medium
         return indicator
     }()
     
@@ -152,14 +152,16 @@ class FeedViewController: UIViewController {
     }
     
     private func stackViewLayout() {
-        [textField, brutForceButton, secondButton, activityIndicator].forEach{ stackView.addArrangedSubview($0)}
+        textField.addSubview(activityIndicator)
+        [textField, brutForceButton, secondButton].forEach{ stackView.addArrangedSubview($0)}
         
         NSLayoutConstraint.activate([
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stackView.heightAnchor.constraint(equalToConstant: 170),
             stackView.widthAnchor.constraint(equalToConstant: 200),
-            
+            activityIndicator.centerXAnchor.constraint(equalTo: textField.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: textField.centerYAnchor),
             textField.heightAnchor.constraint(equalToConstant: 50),
             brutForceButton.heightAnchor.constraint(equalToConstant: 50),
             brutForceButton.widthAnchor.constraint(equalToConstant: 200),
