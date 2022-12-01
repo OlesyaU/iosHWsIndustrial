@@ -25,9 +25,11 @@ class FeedViewController: UIViewController {
     
     private let viewModel: FeedViewModel
     private var result: Bool?
+    private var timer = Timer()
+    private var counter = 0
     var coordinator: FeedCoordinator
     
-    private let stackView: UIStackView = {
+   private let stackView: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.distribution = .fillEqually
@@ -50,20 +52,6 @@ class FeedViewController: UIViewController {
         textField.autocorrectionType = .no
         textField.isSecureTextEntry = false
         return textField
-    }()
-    
-    private lazy var activityIndicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(frame: CGRect(x: textField.center.x, y: textField.center.y, width: 50, height: 50))
-        indicator.style = .medium
-        return indicator
-    }()
-    
-    private lazy var brutForceButton: CustomButton = {
-        let button = CustomButton(title: "Подобрать пароль", background: .systemYellow, titleColor: .black)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(bruteButtonPush), for: .touchUpInside)
-        return button
     }()
     
     private lazy var secondButton: CustomButton = {
@@ -93,16 +81,14 @@ class FeedViewController: UIViewController {
         view.addSubview(label)
         stackViewLayout()
         viewModel.changeState(action: .viewIsReady)
-        activityIndicator.isHidden = true
-        brutForceButton.isHidden = true
         getTimer()
     }
     
-    //    override func viewWillAppear(_ animated: Bool) {
-    //        super.viewWillAppear(animated)
-    //        textField.text = ""
-    //        label.text = ""
-    //    }
+    //        override func viewWillAppear(_ animated: Bool) {
+    //            super.viewWillAppear(animated)
+    //            textField.text = ""
+    //            label.text = ""
+    //        }
     //    Я закомментировала данный код, чтобы результат проверки при возврате на этот контроллер было видно.Если надо . могу убрать просто эту проверку и оставить этот код- в таком случае при возврате на этот экран поле ввода и лейбл будут пустыми
     
     @objc private func buttonPush(_ sender: UIButton) {
@@ -117,9 +103,11 @@ class FeedViewController: UIViewController {
                 return result
             }
             
-            label.text = word
             if result  == true {
+                label.text = word
                 label.textColor = .systemGreen
+                print("На логин  у пользователя ушло \(counter) секунд.")
+                timer.invalidate()
             } else {
                 label.textColor = .red
             }
@@ -128,46 +116,20 @@ class FeedViewController: UIViewController {
         coordinator.setUp()
     }
     
-    @objc private func bruteButtonPush() {
-        viewModel.changeState(action: .brutForce)
-        let brute = viewModel.bruteForce
-        let queue = OperationQueue()
-        guard let word = viewModel.word else {return}
-        let operation = Operation()
-        queue.addBarrierBlock {
-            OperationQueue.main.addOperation {[weak self] in
-                self?.viewModel.changeState(action: .brutForce)
-                self?.activityIndicator.isHidden = false
-                self?.activityIndicator.startAnimating()
-                self?.textField.text = ""
-            }
-            brute.bruteForce(passwordToUnlock: word)
-        }
-        
-        operation.completionBlock = {
-            OperationQueue.main.addOperation { [weak self] in
-                self?.activityIndicator.isHidden = true
-                self?.activityIndicator.stopAnimating()
-                self?.textField.text = word
-            }
-        }
-        queue.addOperation(operation)
+    @objc private func actionTimer(){
+        counter += 1
+        label.text = "\(counter) секунд"
     }
     
     private func stackViewLayout() {
-        textField.addSubview(activityIndicator)
-        [textField, brutForceButton, secondButton].forEach{ stackView.addArrangedSubview($0)}
+        [textField, secondButton].forEach{ stackView.addArrangedSubview($0)}
         
         NSLayoutConstraint.activate([
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stackView.heightAnchor.constraint(equalToConstant: 170),
             stackView.widthAnchor.constraint(equalToConstant: 200),
-            activityIndicator.centerXAnchor.constraint(equalTo: textField.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: textField.centerYAnchor),
             textField.heightAnchor.constraint(equalToConstant: 50),
-            brutForceButton.heightAnchor.constraint(equalToConstant: 50),
-            brutForceButton.widthAnchor.constraint(equalToConstant: 200),
             secondButton.heightAnchor.constraint(equalToConstant: 50),
             textField.widthAnchor.constraint(equalToConstant: 200),
             secondButton.widthAnchor.constraint(equalToConstant: 200)
@@ -175,25 +137,8 @@ class FeedViewController: UIViewController {
     }
     
     private func getTimer(){
-        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
-            let timer = Timer(timeInterval: 60, repeats: false, block: {_ in
-                DispatchQueue.main.async {
-                    self?.navigationController?.navigationBar.isHidden = true
-                    self?.brutForceButton.isHidden = false
-                    self?.view.backgroundColor = .cyan
-                    self?.brutForceButton.backgroundColor = .systemPurple
-                    self?.brutForceButton.setTitleColor(.white, for: .normal)
-                    self?.secondButton.setTitleColor(.systemYellow, for: .normal)
-                    self?.secondButton.backgroundColor = .systemPurple
-                    self?.label.isHidden = true
-                }
-            })
-            RunLoop.current.add(timer, forMode: .common)
-            RunLoop.current.run()
-            timer.invalidate()
-        }
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(actionTimer), userInfo: nil, repeats: true)
     }
 }
 
-//Моя идея при создании таймера в том, чтобы он срабатывал через минуту  после загрузки и подбирал, а затем выводил пароль для входа(возможно пользователь его просто забыл)))
-//(чтобы не ждать- можно изменить время на 5 сек например- для теста )
+//идея в том, чтобы в консоль выводилось время, которое понадобилось пользователю для логина
