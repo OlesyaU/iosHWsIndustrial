@@ -15,7 +15,6 @@ final class FeedViewModel {
     enum State {
         case viewIsReady
         case buttonTapped
-        case brutForce
     }
     var stateChanged: ((State)-> Void)?
     var word: String?
@@ -38,8 +37,6 @@ final class FeedViewModel {
             case .buttonTapped:
            guard let word = word else {return}
                 result = model.check(word: word)
-            case .brutForce:
-                word = model.getpassword()
         }
     }
     
