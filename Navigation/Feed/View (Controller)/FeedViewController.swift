@@ -62,7 +62,7 @@ class FeedViewController: UIViewController {
         let button = CustomButton(title: "Подобрать пароль", background: .systemYellow, titleColor: .black)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(bruteButtonPush(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(bruteButtonPush), for: .touchUpInside)
         return button
     }()
     
@@ -94,6 +94,8 @@ class FeedViewController: UIViewController {
         stackViewLayout()
         viewModel.changeState(action: .viewIsReady)
         activityIndicator.isHidden = true
+        brutForceButton.isHidden = true
+        getTimer()
     }
     
     //    override func viewWillAppear(_ animated: Bool) {
@@ -126,7 +128,7 @@ class FeedViewController: UIViewController {
         coordinator.setUp()
     }
     
-    @objc private func bruteButtonPush(_ sender: UIButton) {
+    @objc private func bruteButtonPush() {
         viewModel.changeState(action: .brutForce)
         let brute = viewModel.bruteForce
         let queue = OperationQueue()
@@ -137,6 +139,7 @@ class FeedViewController: UIViewController {
                 self?.viewModel.changeState(action: .brutForce)
                 self?.activityIndicator.isHidden = false
                 self?.activityIndicator.startAnimating()
+                self?.textField.text = ""
             }
             brute.bruteForce(passwordToUnlock: word)
         }
@@ -170,5 +173,27 @@ class FeedViewController: UIViewController {
             secondButton.widthAnchor.constraint(equalToConstant: 200)
         ])
     }
+    
+    private func getTimer(){
+        DispatchQueue.global(qos: .userInteractive).async { [weak self] in
+            let timer = Timer(timeInterval: 60, repeats: false, block: {_ in
+                DispatchQueue.main.async {
+                    self?.navigationController?.navigationBar.isHidden = true
+                    self?.brutForceButton.isHidden = false
+                    self?.view.backgroundColor = .cyan
+                    self?.brutForceButton.backgroundColor = .systemPurple
+                    self?.brutForceButton.setTitleColor(.white, for: .normal)
+                    self?.secondButton.setTitleColor(.systemYellow, for: .normal)
+                    self?.secondButton.backgroundColor = .systemPurple
+                    self?.label.isHidden = true
+                }
+            })
+            RunLoop.current.add(timer, forMode: .common)
+            RunLoop.current.run()
+            timer.invalidate()
+        }
+    }
 }
 
+//Моя идея при создании таймера в том, чтобы он срабатывал через минуту  после загрузки и подбирал, а затем выводил пароль для входа(возможно пользователь его просто забыл)))
+//(чтобы не ждать- можно изменить время на 5 сек например- для теста )
