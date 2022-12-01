@@ -17,7 +17,6 @@ extension String {
 }
 
 protocol FeedModelProtocol: AnyObject {
-    func getpassword() -> String
     func check(word: String) -> Bool
 }
 
