@@ -15,8 +15,4 @@ final class FeedModel: FeedModelProtocol {
         let trimmed = word.trimmingCharacters(in: .whitespaces)
         return trimmed == passwordFeed
     }
-    
-    func getpassword() -> String {
-        passwordFeed
-    }
 }

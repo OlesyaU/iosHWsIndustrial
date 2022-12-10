@@ -28,7 +28,7 @@ class FeedViewController: UIViewController {
     private var counter = 0
     var coordinator: FeedCoordinator
     
-   private let stackView: UIStackView = {
+    private let stackView: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.distribution = .fillEqually
@@ -81,6 +81,8 @@ class FeedViewController: UIViewController {
         stackViewLayout()
         viewModel.changeState(action: .viewIsReady)
         getTimer()
+        //        forgotPas()
+        
     }
     
     //        override func viewWillAppear(_ animated: Bool) {
@@ -90,9 +92,15 @@ class FeedViewController: UIViewController {
     //        }
     //    Я закомментировала данный код, чтобы результат проверки при возврате на этот контроллер было видно.Если надо . могу убрать просто эту проверку и оставить этот код- в таком случае при возврате на этот экран поле ввода и лейбл будут пустыми
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        timer.invalidate()
+    }
+    //     это для того, чтобы если мы переходим по таббару в профиль например - таймер и  цикл в нем не работал и не выполнял лишнюю работу
+    
+    
     @objc private func buttonPush(_ sender: UIButton) {
         guard let word = textField.text else {return}
-        
         if word ?= "" {
             viewModel.word = word
             viewModel.changeState(action: .buttonTapped)
@@ -106,7 +114,6 @@ class FeedViewController: UIViewController {
                 label.text = word
                 label.textColor = .systemGreen
                 print("На логин  у пользователя ушло \(counter) секунд.")
-                timer.invalidate()
             } else {
                 label.textColor = .red
             }
@@ -115,9 +122,19 @@ class FeedViewController: UIViewController {
         coordinator.setUp()
     }
     
-    @objc private func actionTimer(){
+    @objc private func actionTimer()  {
         counter += 1
         label.text = "\(counter) секунд"
+        do{ try throwing(counter: counter)}
+        catch VCErrors.forgotPas {
+            print("CATCH VCErrors.forgotPas")
+            let alert = UIAlertController(title: "Maybe you forgot correct password and login", message: "You didn't write right password. Correct password is \"Password\"" , preferredStyle: .alert)
+            let act = UIAlertAction(title: "Ok", style: .cancel)
+            alert.addAction(act)
+            present(alert, animated: true)
+        } catch {
+            ()
+        }
     }
     
     private func stackViewLayout() {
@@ -135,9 +152,18 @@ class FeedViewController: UIViewController {
         ])
     }
     
-    private func getTimer(){
+    private func getTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(actionTimer), userInfo: nil, repeats: true)
     }
+    
+    private func throwing(counter: Int) throws {
+        if counter == 5 {
+            throw VCErrors.forgotPas
+        }
+    }
+    
 }
 
+
 //идея в том, чтобы в консоль выводилось время, которое понадобилось пользователю для логина
+// по домашнему заданию по обработке ошибок идея в том, чтобы через минуту после начала ввода пароля в поле при неправильном вводе выводился мессадж, что возможно пароль забыт и напоминалка для юзера...в консоль выходит также время, которое понадобилось юзеру для входа и естественно ошибка в консоль в  файле FEED View Controller

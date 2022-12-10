@@ -38,6 +38,8 @@ final class MainCoordinator: Coordinator {
             
             let nvc = controller as! UINavigationController
             nvc.pushViewController(vc, animated: false)
+            
         }
     }
 }
+

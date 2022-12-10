@@ -39,5 +39,4 @@ final class FeedViewModel {
                 result = model.check(word: word)
         }
     }
-    
 }
