@@ -33,7 +33,9 @@ class PhotosViewController: UIViewController {
         title = "Photo Gallery"
         navigationController?.navigationBar.topItem?.backButtonTitle = "Back"
         layout()
-        errorsHandle()
+        //                errorsHandle()
+        //        filteringImage(images: photos)
+        filteringImage(images: testErrorPhotos)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,8 +61,8 @@ class PhotosViewController: UIViewController {
 // MARK: - UICollectionViewDataSource
 extension PhotosViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        photos.count
-//        photos2.count
+        //        photos.count
+        //        photos2.count
         testErrorPhotos.count
         //        в этот метод надо поставить тестовый(пустой) массив
     }
@@ -68,9 +70,9 @@ extension PhotosViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCollectionViewCell.identifier, for: indexPath) as? PhotosCollectionViewCell else {return UICollectionViewCell()}
         //        в этот метод надо поставить тестовый(пустой) массив
-//        let photo = photos[indexPath.item]
-//        let photo = photos2[indexPath.item]
-        var photo = testErrorPhotos[indexPath.item]
+        //        let photo = photos[indexPath.item]
+        //        let photo = photos2[indexPath.item]
+        let photo = testErrorPhotos[indexPath.item]
         cell.configure(photo: photo)
         return cell
     }
@@ -94,49 +96,54 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension PhotosViewController {
-//        в этот метод надо поставить тестовый(пустой) массив
-    private func filteringImage() throws {
+    //        в этот метод надо поставить тестовый(пустой) массив
+    private func filteringImage(images: [UIImage]) -> Result<[UIImage],VCErrors> {
         let start = DispatchTime.now().uptimeNanoseconds
-        let imageS = testErrorPhotos
-        
-        if imageS.isEmpty {
-            throw VCErrors.noData
+        if !images.isEmpty {
+            processor.processImagesOnThread(sourceImages: images, filter: .sepia(intensity: 1.0), qos: .userInitiated, completion: { [weak self] images in
+                self?.photos = images
+                //                self?.photos2 = images
+                //                self?.testErrorPhotos = images
+                    .compactMap{$0}
+                    .map{UIImage(cgImage: $0)}
+                DispatchQueue.main.async {
+                    [weak self] in
+                    self?.collection.reloadData()
+                    let end = DispatchTime.now().uptimeNanoseconds
+                    let allTime = Int(end - start)/1000000000
+                    print("Время на наложение фильтра \(allTime) секунд")
+                }
+            })
+            return .success(images)
+        } else {
+            let aleart = UIAlertAction(title: "OK", style: .cancel)
+            let act = UIAlertController(title: "OOOOPS", message: "Sorrryyyy...no data, pictures does not loaded", preferredStyle: .alert)
+            act.addAction(aleart)
+            present(act, animated: true)
+            print("NO Data for show")
+            return .failure(VCErrors.noData)
         }
-        processor.processImagesOnThread(sourceImages: imageS, filter: .sepia(intensity: 1.0), qos: .userInitiated, completion: { [weak self] images in
-//            self?.photos = images
-//            self?.photos2 = images
-            self?.testErrorPhotos = images
-                .compactMap{$0}
-                .map{UIImage(cgImage: $0)}
-            DispatchQueue.main.async {
-                [weak self] in
-                self?.collection.reloadData()
-                let end = DispatchTime.now().uptimeNanoseconds
-                let allTime = Int(end - start)/1000000000
-                print("Время на наложение фильтра \(allTime) секунд")
-                
-            }
-        })
-        
     }
-  private func errorsHandle() {
-        do { try filteringImage() }
-        catch let error {
+    
+    private func errorsHandle() {
+        do {
+            try filteringImage(images: testErrorPhotos)
+        }
+        catch let error as VCErrors {
             switch error {
-                case VCErrors.noData:
+                case .noData:
                     let aleart = UIAlertAction(title: "OK", style: .cancel)
                     let act = UIAlertController(title: "OOOOPS", message: "Sorrryyyy...no data, pictures does not loaded", preferredStyle: .alert)
                     act.addAction(aleart)
                     present(act, animated: true)
-                    print("NO Data for use")
                 default:
                     print("default")
             }
         }
     }
-    
 }
 //class PhotosViewController ошибка тут- пустой массив картинок
+// надо немного попереставлять массив и передавать его в метод private func filteringImage(images: [UIImage])...оставила первую реализацию с обработкой ошибок тоже, чтобы Вы посмотрели правильно ли он реализован(надеюсь что да 🤞)
 
 
 // Используем разные приоритеты и стандартный массив картинок:

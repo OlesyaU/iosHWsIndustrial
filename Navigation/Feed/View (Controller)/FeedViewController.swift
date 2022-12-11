@@ -73,6 +73,7 @@ class FeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        preconditionGuard(loaded: self.isViewLoaded)
         view.backgroundColor = .lightGray
         title = "Feed"
         navigationItem.title = "Feed"
@@ -81,8 +82,6 @@ class FeedViewController: UIViewController {
         stackViewLayout()
         viewModel.changeState(action: .viewIsReady)
         getTimer()
-        //        forgotPas()
-        
     }
     
     //        override func viewWillAppear(_ animated: Bool) {
@@ -109,7 +108,6 @@ class FeedViewController: UIViewController {
                 guard let result = self?.result else {return false}
                 return result
             }
-            
             if result  == true {
                 label.text = word
                 label.textColor = .systemGreen
@@ -118,6 +116,7 @@ class FeedViewController: UIViewController {
                 label.textColor = .red
             }
         }
+        
         textField.resignFirstResponder()
         coordinator.setUp()
     }
@@ -162,6 +161,13 @@ class FeedViewController: UIViewController {
         }
     }
     
+    private func preconditionGuard(loaded: Bool) {
+        precondition(loaded)
+        print("Precondition  - \(loaded)")
+        guard let view = self.viewIfLoaded else {return}
+        print("CAN USERS ENABLED WITH VIEW - \(view.isUserInteractionEnabled)")
+        
+    }
 }
 
 
