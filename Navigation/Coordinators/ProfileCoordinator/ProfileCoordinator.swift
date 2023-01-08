@@ -17,8 +17,8 @@ final class ProfileCoordinator: Coordinator {
     private  let loginVC: LogInViewController
     private var profileNC: UINavigationController
     private let service = TestUserService()
+    var errors: VCErrors?
     var controller: UIViewController
-    
     var children: [Coordinator]
     var login: (()->String)?
     var checkResult: (()->Bool)?
@@ -37,17 +37,18 @@ final class ProfileCoordinator: Coordinator {
                                             selectedImage: UIImage(systemName: "person.crop.circle.fill"))
     }
     
-    func setUp() {
+    func setUp()  {
         user = service.getUser(name: login!())
         guard let user = user else {return}
         if checkResult!() {
             present(.profile(user))
         } else {
-            let wrongVC = WrongViewController()
-            controller.navigationController?.pushViewController(wrongVC, animated: true)
+            let aleart = UIAlertAction(title: "User not found", style: .destructive)
+            let aleartVC = UIAlertController(title: "WTF", message: "Strange thing", preferredStyle: .alert)
+            aleartVC.addAction(aleart)
+            controller.present(aleartVC, animated: true)
         }
     }
-    
     
     func present(_ presentation: Presentation) {
         switch presentation {

@@ -9,14 +9,10 @@ import Foundation
 
 final class FeedModel: FeedModelProtocol {
     
-    private let passwordFeed = "Pas"
+    private let passwordFeed = "Password"
     
     func check(word: String) -> Bool {
         let trimmed = word.trimmingCharacters(in: .whitespaces)
         return trimmed == passwordFeed
-    }
-    
-    func getpassword() -> String {
-        passwordFeed
     }
 }
